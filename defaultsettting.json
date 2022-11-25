@@ -1,0 +1,72 @@
+{
+  "token": "",
+  "channel": "nothing",
+  "sleep": {
+    "enable":true,
+    "time":2700,    
+    "duration":300   
+  },
+  "exp": {
+    "enable": false,
+    "channelspamid": "nothing"
+  },
+  "runner":{
+      "hunt":true,
+      "battle":true,
+      "daily":true,
+      "sayowo":true,
+      "buyring":true
+  },
+  "praycurse": {
+    "enable":true,
+    "mode":"pray",
+    "prayother":{
+      "enable":false,
+      "userid":"nothing"
+    }
+  },
+  "sell":{
+    "enable":false,
+    "type":"all"
+  },
+  "prefix": {
+    "enable": true,
+    "key": "el!"
+  },
+  "gem": {
+      "mode":1,
+      "wcrate":false,
+      "lbox":false,
+      "maxtier":4,
+      "minmax":1
+  },
+  "casino":{
+    "enable":false,
+    "channelcasinoid":"nothing",
+    "maxbet":"reset",
+    "cf":{
+        "enable":false,
+        "bet":1,
+        "rate":4
+    },
+    "os":{
+        "enable":false,
+        "bet":1,
+        "rate":3
+    }
+  },
+  "sound":true,
+
+  "webhook": {
+      "enable": false,
+      "link": "none",
+      "pingid": "none"
+  },
+
+
+
+  "twocaptcha":{
+      "enable":false,
+      "api":""
+  }
+}
