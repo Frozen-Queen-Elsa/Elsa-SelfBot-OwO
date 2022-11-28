@@ -18,7 +18,7 @@ class gems:
             self.bot.typingAction(str(client.channel))
             sleep(1.5)
             self.bot.sendMessage(str(client.channel), "owo inv")
-            print(f"{self.at()}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} owo inv")
+            print(f"{self.at()}{color.reset}{color.reset}{color.reset}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} owo inv")
             sleep(3)
             msgs = self.bot.getMessages(str(client.channel), num=10)
             msgs = msgs.json()
@@ -33,13 +33,13 @@ class gems:
                 if '050' in inv:
                     if client.gem['lbox'] and client.stopped != True:
                         self.bot.sendMessage(str(client.channel), "owo lb all")
-                        print(f"{self.at()}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} owo lb all")
+                        print(f"{self.at()}{color.reset}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} owo lb all")
                         sleep(10)
 
                 if '100' in inv:
                     if client.gem['wcrate'] and client.stopped != True:
                         self.bot.sendMessage(str(client.channel), "owo crate all")
-                        print(f"{self.at()}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} owo crate all")
+                        print(f"{self.at()}{color.reset}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} owo crate all")
                         sleep(2)
                 for item in inv:
                     try:
@@ -49,9 +49,9 @@ class gems:
                         inv.pop(inv.index(item))
                 tier = [[], [], []]
                 countGem = [0, 0, 0, 0, 0, 0, 0]
-                print(f"{self.at()}{color.reset} ===========")
+                print(f"{self.at()}{color.reset}{color.reset} ===========")
 
-                print(f"{self.at()}{color.okblue} [INFO] {color.reset} Found {len(inv)} Gems Inventory")
+                print(f"{self.at()}{color.reset}{color.okblue} [INFO] {color.reset} Found {len(inv)} Gems Inventory")
                 available = []
                 for gem in inv:
                     gem = sub(r"[^a-zA-Z0-9]", "", gem)
@@ -60,9 +60,9 @@ class gems:
                         if gem == 51 + i or gem == 65 + i or gem == 72 + i:
                             countGem[i] += 1
 
-                print(f"{self.at()}{color.reset} ===========")
+                print(f"{self.at()}{color.reset}{color.reset} ===========")
 
-                print(f"{self.at()}{color.okgreen} [INFO] {color.okcyan}\n")
+                print(f"{self.at()}{color.reset}{color.okgreen} [INFO] {color.okcyan}\n")
                 print(f" 		     Gem C: {countGem[0]} loại\n")
                 print(f" 		     Gem U: {countGem[1]} loại\n")
                 print(f" 		     Gem R: {countGem[2]} loại\n")
@@ -70,7 +70,7 @@ class gems:
                 print(f" 		     Gem M: {countGem[4]} loại\n")
                 print(f" 		     Gem L: {countGem[5]} loại\n")
                 print(f" 		     Gem F: {countGem[6]} loại {color.reset}")
-                print(f"{self.at()}{color.reset} ===========")
+                print(f"{self.at()}{color.reset}{color.reset} ===========")
                 sleep(1)
 
                 if client.gem['minmax'].lower() == 'min':
@@ -89,7 +89,7 @@ class gems:
                             nogem = True
                 if nogem:
                     # print(f"{at()}{color.fail} [INFO] {color.reset} {client.checknogem}")
-                    print(f"{self.at()}{color.fail} [INFO] {color.reset} You currently don't have the same set of 3 gems so that you can't use them")
+                    print(f"{self.at()}{color.reset}{color.fail} [INFO] {color.reset} You currently don't have the same set of 3 gems so that you can't use them")
         return nogem
 
     def use3gem(self,level, count):
@@ -134,9 +134,9 @@ class gems:
             if count == 3:
                 sleep(2)
                 self.bot.sendMessage(str(client.channel), "owo use {} {} {}".format(str(a), str(b), str(c)))
-                print(f"{self.at()}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} owo use {a} {b} {c} [GEMS {color.purple}{typegem}{color.reset}][{color.cyan}{str(turngem)} turn{color.reset}]")
+                print(f"{self.at()}{color.reset}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} owo use {a} {b} {c} [GEMS {color.purple}{typegem}{color.reset}][{color.cyan}{str(turngem)} turn{color.reset}]")
                 client.checkusegem += 1
-                print(f'{self.at()}{color.warning} [INFO] !! [USE GEM lần {client.checkusegem}] !! {color.reset} ')
+                print(f'{self.at()}{color.reset}{color.warning} [INFO] !! [USE GEM lần {client.checkusegem}] !! {color.reset} ')
                 return True
             else:
                 return False

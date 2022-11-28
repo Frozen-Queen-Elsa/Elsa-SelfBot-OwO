@@ -9,6 +9,7 @@ class musics:
     def captchamusic(self):
         if client.sound == 'yes':
             playsound('KhueMocLang.mp3')
+            #playsound('Files/Captcha.mp3')
 
     def solvedmusic(self):
         if client.sound == 'yes':

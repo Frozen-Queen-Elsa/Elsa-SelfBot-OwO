@@ -22,6 +22,7 @@ try:
     from discum.utils.slash import SlashCommander
     from discord_webhook import DiscordWebhook
 except Exception as e:
+    print(str(e))
     from setup import install
     install()
     from playsound import playsound
@@ -102,6 +103,7 @@ while True:
             print(f'Join this server to register solving system https://dsc.gg/serverafs {color.reset}')
         else:
             print(f'{color.okcyan}You are using vip version for solving captcha by TwoCaptcha{color.reset}')
+
         break
 
     elif choice == "2":
@@ -185,9 +187,9 @@ def on_ready(resp):
         print(f"{color.purple}Prefix Mode: '{client.prefix['enable']}'{color.reset}")
         if client.prefix['enable']:
             print(f"{color.purple}Selfbot Commands Prefix: '{client.prefix['key']}'{color.reset}")
-            print(f"{color.purple}Selfbot Commands Allowedid: {client.prefix['allowedid']}{color.reset}")
+            print(f"{color.purple}Selfbot Commands Allowed Id: {client.prefix['allowed_id']}{color.reset}")
         print(f"{color.purple}Webhook Mode: '{client.webhook['enable']}'{color.reset}")
-        print(f"{color.purple}Webhook Ping: {client.webhook['ping']}{color.reset}")
+        print(f"{color.purple}Webhook Ping User Id: {client.webhook['pingid']}{color.reset}")
         print(f"{color.purple}----------------------------------{color.reset}")
         if not client.twocaptcha['enable']:
             print(f"{color.purple}Solve Captcha Mode: {client.solve['enable']}{color.reset}")
@@ -244,6 +246,7 @@ def CheckCaptcha(resp):
 
         dmsid = dms()
     except Exception as e:
+        print(str(e))
         dmsid = None
 
     def SolveFree(image_url, captcha_mes):
@@ -263,6 +266,7 @@ def CheckCaptcha(resp):
                     try:
                         captcha_mes = json.loads(captcha_mes.text[1:-1]) if type(captcha_mes.json()) is list else {'author': {'id': '0'}}
                     except Exception as e:
+                        print(str(e))
                         webhook.webhookping(client.username, client.userid)
                         threadcaptcha.start()
                         print(f"{color.okcyan}[INFO] {color.reset}There's An Issue With ReRunner")
@@ -289,6 +293,7 @@ def CheckCaptcha(resp):
                     print(f"{color.okcyan}[INFO] {color.reset}Captcha Solver API Is Having An Issue...")
                     return "captcha"
         except Exception as e:
+            print(str(e))
             webhook.webhookping(client.username, client.userid)
             threadcaptcha.start()
             return "captcha"
@@ -327,6 +332,7 @@ def CheckCaptcha(resp):
             try:
                 mes = json.loads(msgs.text[1:-1]) if type(msgs.json()) is list else {'author': {'id': '0'}}
             except Exception as e:
+                print(str(e))
                 print(f"{color.okcyan}[INFO] {color.reset}There's An Issue With Re Runner")
                 webhook.webhookPing(f"=========================================================================================")
                 sleep(2)
@@ -441,17 +447,17 @@ def CheckCaptcha(resp):
             if m['author']['id'] == client.OwOID or m['author']['username'] == 'OwO' or m['author']['discriminator'] == '8456':
                 if client.username in m['content'] and 'banned' in m['content'].lower():
                     client.stopped = True
-                    print(f'{at()}{color.fail} !!! [BANNED] !!! {color.reset} Your Account Have Been Banned From OwO Bot Please Open An Issue On The Support Discord server')
+                    print(f'{at()}{color.reset}{color.fail} !!! [BANNED] !!! {color.reset} Your Account Have Been Banned From OwO Bot Please Open An Issue On The Support Discord server')
                     return "captcha"
                 if client.username in m['content'] and any(captcha in m['content'].lower() for captcha in ['(1/5)', '(2/5)', '(3/5)', '(4/5)', '(5/5)']):
                     msgs = bot.getMessages(dmsid)
                     msgs = msgs.json()
                     if type(msgs) is dict:
                         client.stopped = True
-                        print(f'{at()}{color.warning} !! [CAPTCHA] !! {color.reset} ACTION REQUİRED')
+                        print(f'{at()}{color.reset}{color.warning} !! [CAPTCHA] !! {color.reset} ACTION REQUİRED')
                         return "captcha"
                     if client.username in m['content'] and msgs[0]['author']['id'] == client.OwOID and '⚠' in msgs[0]['content'] and msgs[0]['attachments']:
-                        print(f'{at()}{color.warning} !! [CAPTCHA] !! {color.reset} ACTION REQUİRED')
+                        print(f'{at()}{color.reset}{color.warning} !! [CAPTCHA] !! {color.reset} ACTION REQUİRED')
                         if client.twocaptcha['enable']:
                             return SolveVIP(msgs[0]['attachments'][0]['url'], msgs[0]['content'], "", 0, 0, 1)
                         else:
@@ -472,7 +478,7 @@ def CheckCaptcha(resp):
                     msgs = msgs.json()
                     for i in range(len(msgs)):
                         if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'solving the captcha' in msgs[i]['content'].lower() and not client.stopped:
-                            print(f'{at()}{color.warning} !! [CAPTCHA] !! {color.reset} ACTION REQUİRED')
+                            print(f'{at()}{color.reset}{color.warning} !! [CAPTCHA] !! {color.reset} ACTION REQUİRED')
                             if client.twocaptcha['enable']:
                                 return SolveVIP(msgs[i]['attachments'][0]['url'], msgs[0]['content'], "", 0, 0, 1)
                             else:
@@ -489,7 +495,7 @@ def CheckCaptcha(resp):
                 if client.username in m['content'] and '⚠' in m['content'].lower() and not client.stopped:
                     if client.solve.lower() != "no" and m['attachments'] and not client.stopped:
                         client.stopped = True
-                        print(f'{at()}{color.warning} !! [CAPTCHA] !! {color.reset} ACTION REQUİRED')
+                        print(f'{at()}{color.reset}{color.warning} !! [CAPTCHA] !! {color.reset} ACTION REQUİRED')
                         if client.twocaptcha['enable']:
                             return SolveVIP(m['attachments'][0]['url'], m['content'], "", 0, 0, 1)
                         else:
@@ -500,7 +506,7 @@ def CheckCaptcha(resp):
                                 client.stopped = True
                                 return "captcha"
                     client.stopped = True
-                    print(f'{at()}{color.warning} !! [CAPTCHA] !! {color.reset} ACTION REQUİRED')
+                    print(f'{at()}{color.reset}{color.warning} !! [CAPTCHA] !! {color.reset} ACTION REQUİRED')
                     return "captcha"
 
 
@@ -508,131 +514,131 @@ def CheckCaptcha(resp):
 def CheckPrefix(resp):
     if client.prefix['enable']:
         prefix = client.prefix['key']
-        file = open("settings.json", "r")
-        with open("settings.json", "r") as f:
+        file = open("owosettings.json", "r")
+        with open("owosettings.json", "r") as f:
             data = json.load(f)
             if resp.event.message:
                 m = resp.parsed.auto()
 
-            if m['author']['id'] == client.userid or m['channel_id'] == client.channel:
-                if m['author']['id'] == client.prefix['allowed_id'] or m['author']['id'] == client.userid:
-                    if m['content'].startswith(f"{prefix}send"):
-                        message = m['content'].replace(f'{prefix}send ', '')
-                        bot.sendMessage(str(m['channel_id']), message)
-                        print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} {message}")
-                    if m['content'].startswith(f"{prefix}restart"):
-                        bot.sendMessage(str(m['channel_id']), "Restarting...")
-                        print(f"{color.okcyan} [INFO] Restarting...  {color.reset}")
-                        sleep(1)
-                        os.system('python "elsaowo.py"')
-                    # subprocess.call(sys.executable + ' "' + os.path.realpath(__file__) + '"')
-                    # #execl(executable, executable, *argv)
-                    if m['content'].startswith("f{prefix}exit"):
-                        bot.sendMessage(str(m['channel_id']), "Exiting...")
-                        print(f"{color.okcyan} [INFO] Exiting...  {color.reset}")
-                        bot.gateway.close()
-                    if m['content'].startswith(f"{prefix}gem"):
-                        if "on" in m['content'].lower():
-                            client.gem['enable'] = True
-                            bot.sendMessage(str(m['channel_id']), f"{client.username} Turned on Gems Mode")
-                            print(f"{color.okcyan}[INFO] Turned On Gems Mode{color.okcyan}")
-                            file = open("settings.json", "w")
-                            data['gem']['enable'] = True
-                            json.dump(data, file)
-                            file.close()
-                        if "off" in m['content'].lower():
-                            client.gem['enable'] = False
-                            bot.sendMessage(str(m['channel_id']), f"{client.username} Turned Off Gems Mode")
-                            print(f"{color.okcyan}[INFO] Turned On Gems Mode{color.okcyan}")
-                            file = open("settings.json", "w")
-                            data['gem']['enable'] = False
-                            json.dump(data, file)
-                            file.close()
-                    if m['content'].startswith(f"{prefix}praycurse"):
-                        if "on" in m['content'].lower():
-                            client.praycurse['enable'] = True
-                            bot.sendMessage(str(m['channel_id']), f"{client.username} Turned on Pray/Curse Mode")
-                            print(f"{color.okcyan}[INFO] Turned On Pray/Curse Mode{color.okcyan}")
-                            file = open("settings.json", "w")
-                            data['praycurse']['enable'] = True
-                            json.dump(data, file)
-                            file.close()
-                        if "off" in m['content'].lower():
-                            client.praycurse['enable'] = False
-                            bot.sendMessage(str(m['channel_id']), f"{client.username} Turned Off Pray/Curse Mode")
-                            print(f"{color.okcyan}[INFO] Turned On Pray/Curse Mode{color.okcyan}")
-                            file = open("settings.json", "w")
-                            data['praycurse']['enable'] = False
-                            json.dump(data, file)
-                            file.close()
-                    if m['content'].startswith(f"{prefix}sleep"):
-                        if "on" in m['content'].lower():
-                            client.sleep['enable'] = True
-                            bot.sendMessage(str(m['channel_id']), f"{client.username} Turned on Sleep Mode")
-                            print(f"{color.okcyan}[INFO] Turned On Sleep Mode{color.okcyan}")
-                            file = open("settings.json", "w")
-                            data['sleep']['enable'] = True
-                            json.dump(data, file)
-                            file.close()
-                        if "off" in m['content'].lower():
-                            client.sleep['enable'] = False
-                            bot.sendMessage(str(m['channel_id']), f"{client.username} Turned Off Sleep Mode")
-                            print(f"{color.okcyan}[INFO] Turned On Sleep Mode{color.okcyan}")
-                            file = open("settings.json", "w")
-                            data['sleep']['enable'] = False
-                            json.dump(data, file)
-                            file.close()
-                    if m['content'].startswith(f"{prefix}sell"):
-                        if "on" in m['content'].lower():
-                            client.sell['enable'] = True
-                            bot.sendMessage(str(m['channel_id']), f"{client.username} Turned on Sell Mode")
-                            print(f"{color.okcyan}[INFO] Turned On Sell Mode{color.okcyan}")
-                            file = open("settings.json", "w")
-                            data['sell']['enable'] = True
-                            json.dump(data, file)
-                            file.close()
-                        if "off" in m['content'].lower():
-                            client.sell['enable'] = False
-                            bot.sendMessage(str(m['channel_id']), f"{client.username} Turned Off Sell Mode")
-                            print(f"{color.okcyan}[INFO] Turned On Sell Mode{color.okcyan}")
-                            file = open("settings.json", "w")
-                            data['sell']['enable'] = False
-                            json.dump(data, file)
-                            file.close()
-                    if m['content'].startswith(f"{prefix}exp"):
-                        if "on" in m['content'].lower():
-                            client.exp['enable'] = True
-                            bot.sendMessage(str(m['channel_id']), f"{client.username} Turned on Exp Mode")
-                            print(f"{color.okcyan}[INFO] Turned On Exp Mode{color.okcyan}")
-                            file = open("settings.json", "w")
-                            data['exp']['enable'] = True
-                            json.dump(data, file)
-                            file.close()
-                        if "off" in m['content'].lower():
-                            client.exp['enable'] = False
-                            bot.sendMessage(str(m['channel_id']), f"{client.username} Turned Off Exp Mode")
-                            print(f"{color.okcyan}[INFO] Turned On Exp Mode{color.okcyan}")
-                            file = open("settings.json", "w")
-                            data['exp']['enable'] = False
-                            json.dump(data, file)
-                            file.close()
-                    if m['content'].startswith(f"{prefix}huntbot"):
-                        if "on" in m['content'].lower():
-                            client.huntbot['enable'] = True
-                            bot.sendMessage(str(m['channel_id']), f"{client.username} Turned on Hunt Bot Mode")
-                            print(f"{color.okcyan}[INFO] Turned On Hunt Bot Mode{color.okcyan}")
-                            file = open("settings.json", "w")
-                            data['huntbot']['enable'] = True
-                            json.dump(data, file)
-                            file.close()
-                        if "off" in m['content'].lower():
-                            client.exp['enable'] = False
-                            bot.sendMessage(str(m['channel_id']), f"{client.username} Turned Off Hunt Bot Mode")
-                            print(f"{color.okcyan}[INFO] Turned On Hunt Bot Mode{color.okcyan}")
-                            file = open("settings.json", "w")
-                            data['huntbot']['enable'] = False
-                            json.dump(data, file)
-                            file.close()
+                if m['author']['id'] == client.userid or m['channel_id'] == client.channel:
+                    if m['author']['id'] == client.prefix['allowed_id'] or m['author']['id'] == client.userid:
+                        if m['content'].startswith(f"{prefix}send"):
+                            message = m['content'].replace(f'{prefix}send ', '')
+                            bot.sendMessage(str(m['channel_id']), message)
+                            print(f"{at()}{color.reset}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} {message}")
+                        if m['content'].startswith(f"{prefix}restart"):
+                            bot.sendMessage(str(m['channel_id']), "Restarting...")
+                            print(f"{color.okcyan} [INFO] Restarting...  {color.reset}")
+                            sleep(1)
+                            os.system('python "elsaowo.py"')
+                        # subprocess.call(sys.executable + ' "' + os.path.realpath(__file__) + '"')
+                        # #execl(executable, executable, *argv)
+                        if m['content'].startswith("f{prefix}exit"):
+                            bot.sendMessage(str(m['channel_id']), "Exiting...")
+                            print(f"{color.okcyan} [INFO] Exiting...  {color.reset}")
+                            bot.gateway.close()
+                        if m['content'].startswith(f"{prefix}gem"):
+                            if "on" in m['content'].lower():
+                                client.gem['enable'] = True
+                                bot.sendMessage(str(m['channel_id']), f"{client.username} Turned on Gems Mode")
+                                print(f"{color.okcyan}[INFO] Turned On Gems Mode{color.okcyan}")
+                                file = open("owosettings.json", "w")
+                                data['gem']['enable'] = True
+                                json.dump(data, file)
+                                file.close()
+                            if "off" in m['content'].lower():
+                                client.gem['enable'] = False
+                                bot.sendMessage(str(m['channel_id']), f"{client.username} Turned Off Gems Mode")
+                                print(f"{color.okcyan}[INFO] Turned On Gems Mode{color.okcyan}")
+                                file = open("owosettings.json", "w")
+                                data['gem']['enable'] = False
+                                json.dump(data, file)
+                                file.close()
+                        if m['content'].startswith(f"{prefix}praycurse"):
+                            if "on" in m['content'].lower():
+                                client.praycurse['enable'] = True
+                                bot.sendMessage(str(m['channel_id']), f"{client.username} Turned on Pray/Curse Mode")
+                                print(f"{color.okcyan}[INFO] Turned On Pray/Curse Mode{color.okcyan}")
+                                file = open("owosettings.json", "w")
+                                data['praycurse']['enable'] = True
+                                json.dump(data, file)
+                                file.close()
+                            if "off" in m['content'].lower():
+                                client.praycurse['enable'] = False
+                                bot.sendMessage(str(m['channel_id']), f"{client.username} Turned Off Pray/Curse Mode")
+                                print(f"{color.okcyan}[INFO] Turned On Pray/Curse Mode{color.okcyan}")
+                                file = open("owosettings.json", "w")
+                                data['praycurse']['enable'] = False
+                                json.dump(data, file)
+                                file.close()
+                        if m['content'].startswith(f"{prefix}sleep"):
+                            if "on" in m['content'].lower():
+                                client.sleep['enable'] = True
+                                bot.sendMessage(str(m['channel_id']), f"{client.username} Turned on Sleep Mode")
+                                print(f"{color.okcyan}[INFO] Turned On Sleep Mode{color.okcyan}")
+                                file = open("owosettings.json", "w")
+                                data['sleep']['enable'] = True
+                                json.dump(data, file)
+                                file.close()
+                            if "off" in m['content'].lower():
+                                client.sleep['enable'] = False
+                                bot.sendMessage(str(m['channel_id']), f"{client.username} Turned Off Sleep Mode")
+                                print(f"{color.okcyan}[INFO] Turned On Sleep Mode{color.okcyan}")
+                                file = open("owosettings.json", "w")
+                                data['sleep']['enable'] = False
+                                json.dump(data, file)
+                                file.close()
+                        if m['content'].startswith(f"{prefix}sell"):
+                            if "on" in m['content'].lower():
+                                client.sell['enable'] = True
+                                bot.sendMessage(str(m['channel_id']), f"{client.username} Turned on Sell Mode")
+                                print(f"{color.okcyan}[INFO] Turned On Sell Mode{color.okcyan}")
+                                file = open("owosettings.json", "w")
+                                data['sell']['enable'] = True
+                                json.dump(data, file)
+                                file.close()
+                            if "off" in m['content'].lower():
+                                client.sell['enable'] = False
+                                bot.sendMessage(str(m['channel_id']), f"{client.username} Turned Off Sell Mode")
+                                print(f"{color.okcyan}[INFO] Turned On Sell Mode{color.okcyan}")
+                                file = open("owosettings.json", "w")
+                                data['sell']['enable'] = False
+                                json.dump(data, file)
+                                file.close()
+                        if m['content'].startswith(f"{prefix}exp"):
+                            if "on" in m['content'].lower():
+                                client.exp['enable'] = True
+                                bot.sendMessage(str(m['channel_id']), f"{client.username} Turned on Exp Mode")
+                                print(f"{color.okcyan}[INFO] Turned On Exp Mode{color.okcyan}")
+                                file = open("owosettings.json", "w")
+                                data['exp']['enable'] = True
+                                json.dump(data, file)
+                                file.close()
+                            if "off" in m['content'].lower():
+                                client.exp['enable'] = False
+                                bot.sendMessage(str(m['channel_id']), f"{client.username} Turned Off Exp Mode")
+                                print(f"{color.okcyan}[INFO] Turned On Exp Mode{color.okcyan}")
+                                file = open("owosettings.json", "w")
+                                data['exp']['enable'] = False
+                                json.dump(data, file)
+                                file.close()
+                        if m['content'].startswith(f"{prefix}huntbot"):
+                            if "on" in m['content'].lower():
+                                client.huntbot['enable'] = True
+                                bot.sendMessage(str(m['channel_id']), f"{client.username} Turned on Hunt Bot Mode")
+                                print(f"{color.okcyan}[INFO] Turned On Hunt Bot Mode{color.okcyan}")
+                                file = open("owosettings.json", "w")
+                                data['huntbot']['enable'] = True
+                                json.dump(data, file)
+                                file.close()
+                            if "off" in m['content'].lower():
+                                client.exp['enable'] = False
+                                bot.sendMessage(str(m['channel_id']), f"{client.username} Turned Off Hunt Bot Mode")
+                                print(f"{color.okcyan}[INFO] Turned On Hunt Bot Mode{color.okcyan}")
+                                file = open("owosettings.json", "w")
+                                data['huntbot']['enable'] = False
+                                json.dump(data, file)
+                                file.close()
 
 
 # Check Hunt
@@ -645,10 +651,12 @@ def CheckHunt(resp):
                 if m['author']['id'] == client.OwOID:
                     if client.username in m['content'] and "**🌱" in m['content']:
                         channels = bot.gateway.session.guild(client.guild_id).channels
+
                         for i in channels:
                             if channels[i]['type'] == "guild_text" and channels[i]['id'] == m['channel_id']:
-                                channel4 = channels[i]
-                        channelname = channel4['name']
+                                channelname = channels[i]['name']
+
+                        pethunt=''
                         if "empowered" in m['content']:
                             pet1 = function.substring_after(m['content'], ":blank: |")
                             pethunt = function.substring_before(pet1, ':blank: |')
@@ -699,9 +707,9 @@ def CheckGem(resp):
             if m['channel_id'] == client.channel and not client.stopped:
                 if m['author']['id'] == client.OwOID:
                     if client.username in m['content'] and "**🌱" in m['content']:
-                        print(f'{at()}{color.warning} !! [CHECK GEM HUNT] !! {color.reset} ')
+                        print(f'{at()}{color.reset}{color.warning} !! [CHECK GEM HUNT] !! {color.reset} ')
                     if client.username in m['content'] and "and caught" in m['content'] and not client.checknogem:
-                        print(f'{at()}{color.warning} !! [CHECK GEM] checknogem = {client.checknogem}!! {color.reset} ')
+                        print(f'{at()}{color.reset}{color.warning} !! [CHECK GEM] checknogem = {client.checknogem}!! {color.reset} ')
                         # Gems.useGems()
                         if not gem.useGem():
                             client.checknogem = False
@@ -844,24 +852,6 @@ def CheckBalance(resp):
                     client.checknocash = True
 
 
-def threadcasino():
-    cf = 0
-    slot = 0
-    while True:
-        if client.stopped:
-            break
-        if not client.stopped:
-            if time() - cf > random.randint(17, 28) and not client.stopped:
-                if client.casino['cf']['enable'] and client.casino['enable'] and not client.checknocash:
-                    casino.CoinFlip(client.currentcfbet)
-                cf = time()
-            if time() - slot > random.randint(17, 28) and not client.stopped:
-                if client.casino['os']['enable'] and client.casino['enable'] and not client.checknocash:
-                    casino.Slot(client.currentosbet)
-                slot = time()
-
-            sleep(1)
-
 
 def ElsaLoopie():
     pray = 0
@@ -879,87 +869,89 @@ def ElsaLoopie():
 
     change = main
 
-    while True:
-        if client.stopped:
-            break
-        if not client.stopped:
-            # Hunt Mode
-            if time() - hunt > random.randint(15, 25) and not client.stopped and client.runner['hunt']:
-                runner.hunt(client.username)
-                hunt = time()
+    try:
+        while True:
+            if client.stopped:
+                break
+            if not client.stopped:
+                # Hunt Mode
+                if time() - hunt > random.randint(15, 25) and not client.stopped and client.runner['hunt']:
+                    runner.hunt(client.username)
+                    hunt = time()
 
-            # Battle Mode
-            if time() - battle > random.randint(15, 22) and not client.stopped and client.runner['battle']:
-                runner.battle(client.username)
-                battle = time()
+                # Battle Mode
+                if time() - battle > random.randint(15, 22) and not client.stopped and client.runner['battle']:
+                    runner.battle(client.username)
+                    battle = time()
 
-            # Say owo Mode
-            if time() - owo > random.randint(15, 25) and not client.stopped and client.runner['owo']:
-                runner.owo(client.username)
-                owo = time()
-            # Buy Ring Mode
-            if time() - ring > random.randint(8, 15) and not client.stopped and client.runner['ring']:
-                runner.ring(client.username)
-                ring = time()
+                # Say owo Mode
+                if time() - owo > random.randint(15, 25) and not client.stopped and client.runner['owo']:
+                    runner.owo(client.username)
+                    owo = time()
+                # Buy Ring Mode
+                if time() - ring > random.randint(8, 15) and not client.stopped and client.runner['ring']:
+                    runner.ring(client.username)
+                    ring = time()
 
-            # Pray/Curse Mode
-            if time() - pray > random.randint(300, 400) and not client.stopped and client.praycurse['enable']:
-                runner.praycurse(client.username)
-                pray = time()
+                # Pray/Curse Mode
+                if time() - pray > random.randint(300, 400) and not client.stopped and client.praycurse['enable']:
+                    runner.praycurse(client.username)
+                    pray = time()
 
-            # Spam Mode
-            if time() - exp > random.randint(20, 40) and not client.stopped and client.exp['enable']:
-                spam.exp(client.exp['channelspamid'], client.username)
-                exp = time()
+                # Spam Mode
+                if time() - exp > random.randint(20, 40) and not client.stopped and client.exp['enable']:
+                    spam.exp(client.exp['channelspamid'], client.username)
+                    exp = time()
 
-            # Sleep Mode
-            if time() - main > client.sleep['time'] and not client.stopped and client.sleep['enable']:
-                main = time()
-                print(f"{at()}{color.okblue} [INFO]{color.reset} Sleeping")
-                sleep(client.sleep['duration'])
-            # subprocess.call(sys.executable + ' "' + os.path.realpath(__file__) + '"')
-            # os.system('python "elsaowo.py"')
+                # Sleep Mode
+                if time() - main > client.sleep['time'] and not client.stopped and client.sleep['enable']:
+                    main = time()
+                    print(f"{at()}{color.reset}{color.okblue} [INFO]{color.reset} Sleeping")
+                    sleep(client.sleep['duration'])
+                # subprocess.call(sys.executable + ' "' + os.path.realpath(__file__) + '"')
+                # os.system('python "elsaowo.py"')
 
-            # Daily Mode
-            if time() - daily > int(client.wait_time_daily) and not client.stopped and client.runner['daily']:
-                client.wait_time_daily = runner.daily()
-                daily = time()
+                # Daily Mode
+                if time() - daily > int(client.wait_time_daily) and not client.stopped and client.runner['daily']:
+                    client.wait_time_daily = runner.daily(client.username)
+                    daily = time()
 
-            # Hunt_bot Mode
-            if time() - hunt_bot > int(client.wait_time_huntbot) and not client.stopped and client.huntbot['enable']:
-                client.wait_time_hunt_bot = runner.huntbot(client.username)
-                hunt_bot = time()
+                # Hunt_bot Mode
+                if time() - hunt_bot > int(client.wait_time_huntbot) and not client.stopped and client.huntbot['enable']:
+                    client.wait_time_huntbot = runner.huntbot(client.username)
+                    hunt_bot = time()
 
-            # Sell Mode
-            if client.sell['enable'] and not client.stopped:
-                if time() - sell > random.randint(600, 1000):
-                    sell = time()
-                    runner.sell(client.username)
+                # Sell Mode
+                if client.sell['enable'] and not client.stopped:
+                    if time() - sell > random.randint(600, 1000):
+                        sell = time()
+                        runner.sell(client.username)
 
-            # Change Channel Mode
-            if client.exp['changechannel'] and client.exp['enable'] and not client.stopped:
-                if time() - change > random.randint(600, 1500) and not client.stopped:
-                    change = time()
-                    guild_spam_id = bot.getChannel(client.channelspambackup).json()['guild_id']
-                    channels_spam = bot.gateway.session.guild(guild_spam_id).channels
-                    channel = runner.changeChannel(channels_spam)
-                    client.exp['channelspamid'] = channel[0]
-                    print(f"{at()}{color.okcyan} [INFO] {color.reset} Changed Channel Spaming To : {channel[1]}")
+                # Change Channel Mode
+                if client.exp['changechannel'] and client.exp['enable'] and not client.stopped:
+                    if time() - change > random.randint(600, 1500) and not client.stopped:
+                        change = time()
+                        guild_spam_id = bot.getChannel(client.channelspambackup).json()['guild_id']
+                        channels_spam = bot.gateway.session.guild(guild_spam_id).channels
+                        channel = runner.changeChannel(channels_spam)
+                        client.exp['channelspamid'] = channel[0]
+                        print(f"{at()}{color.reset}{color.okcyan} [INFO] {color.reset} Changed Channel Spaming To : {channel[1]}")
 
-            # Coin Flip
-            if time() - coin_flip > random.randint(17, 28) and not client.stopped:
-                if client.casino['cf']['enable'] and client.casino['enable'] and not client.checknocash:
-                    casino.CoinFlip(client.currentcfbet)
-                coin_flip = time()
+                # Coin Flip
+                if time() - coin_flip > random.randint(17, 28) and not client.stopped:
+                    if client.casino['cf']['enable'] and client.casino['enable'] and not client.checknocash:
+                        casino.CoinFlip(client.currentcfbet)
+                    coin_flip = time()
 
-            # Slot
-            if time() - slot > random.randint(17, 28) and not client.stopped:
-                if client.casino['os']['enable'] and client.casino['enable'] and not client.checknocash:
-                    casino.Slot(client.currentosbet)
-                slot = time()
+                # Slot
+                if time() - slot > random.randint(17, 28) and not client.stopped:
+                    if client.casino['os']['enable'] and client.casino['enable'] and not client.checknocash:
+                        casino.Slot(client.currentosbet)
+                    slot = time()
 
-            sleep(0.1)
-
+                sleep(0.1)
+    except Exception as e:
+        print(str(e))
 
 def loopie():
     ElsaLoopie()
@@ -990,7 +982,7 @@ def atexit():
     # execl(executable, executable, *argv)
     elif choice == "2":
         print("Having Issue? Tell Us In Our Support Server")
-        print(f"{color.purple} https://discord.gg/9uZ6eXFPHD {color.reset}")
+        print(f"{color.purple} https://dsc.gg/serverafs {color.reset}")
     elif choice == "3":
         bot.gateway.close()
     else:

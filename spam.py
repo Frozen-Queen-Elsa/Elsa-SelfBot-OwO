@@ -21,7 +21,7 @@ class spam:
                 json_data = response.json()
                 data = json_data['data']
                 self.bot.sendMessage(str(channel_spam), data[0]['quoteText'])
-                print(f'{self.at()}{color.okcyan} User: {username}{color.okcyan} [SPAM] {color.reset}')
+                print(f'{self.at()}{color.reset}{color.okcyan} User: {username}{color.okcyan} [SPAM] {color.reset}')
                 client.totaltext += 1
                 sleep(random.randint(1, 6))
         except:

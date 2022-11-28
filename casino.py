@@ -20,7 +20,7 @@ class casinos:
         self.bot.typingAction(str(client.casino['channelcasinoid']))
         sleep(0.6)
         self.bot.sendMessage(str(client.casino['channelcasinoid']), "owo cf {}  ".format(currentbet))
-        print(f"{self.at()}{color.okcyan} User: {client.username} {color.warning}[SENT]  owo cf {currentbet}  ")
+        print(f"{self.at()}{color.reset}{color.okcyan} User: {client.username} {color.warning}[SENT]  owo cf {currentbet}  ")
         sleep(2)
         sleep(random.randint(1, 4))
 
@@ -29,6 +29,6 @@ class casinos:
         self.bot.typingAction(str(client.casino['channelcasinoid']))
         sleep(0.6)
         self.bot.sendMessage(str(client.casino['channelcasinoid']), "owo s {}  ".format(currentbet))
-        print(f"{self.at()}{color.okcyan} User: {client.username} {color.warning}[SENT]  owo s {currentbet}  ")
+        print(f"{self.at()}{color.reset}{color.okcyan} User: {client.username} {color.warning}[SENT]  owo s {currentbet}  ")
         sleep(3)
         sleep(random.randint(1, 4))

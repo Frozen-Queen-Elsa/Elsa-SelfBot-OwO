@@ -23,7 +23,7 @@
     "mode":"pray",
     "prayother":{
       "enable":true,
-      "userid":"nothing"
+      "userid":"none"
     }
   },
   "sell":{
