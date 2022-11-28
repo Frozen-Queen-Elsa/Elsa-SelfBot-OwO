@@ -22,7 +22,7 @@ try:
     from discum.utils.slash import SlashCommander
     from discord_webhook import DiscordWebhook
 except Exception as e:
-    print(str(e))
+
     from setup import install
     install()
     from playsound import playsound
@@ -103,12 +103,10 @@ while True:
             print(f'Join this server to register solving system https://dsc.gg/serverafs {color.reset}')
         else:
             print(f'{color.okcyan}You are using vip version for solving captcha by TwoCaptcha{color.reset}')
-
         break
 
     elif choice == "2":
         from newinformation import main
-
         main()
 
     elif choice == "3":
@@ -127,6 +125,9 @@ while True:
 @bot.gateway.command
 def on_ready(resp):
     if resp.event.ready_supplemental:  # ready_supplemental is sent after ready
+        for i in range(len(bot.gateway.session.DMIDs)):
+            if client.OwOID in bot.gateway.session.DMs[bot.gateway.session.DMIDs[i]]['recipients']:
+                client.dmsid = bot.gateway.session.DMIDs[i]
         user = bot.gateway.session.user
         client.username = user['username']
         client.userid = user['id']
@@ -232,22 +233,7 @@ def CheckCaptcha(resp):
                 print(f'TIME OUT 5 MINUTES for SOLVE')
                 return 'captcha'
 
-    try:
-        user = bot.gateway.session.user
 
-        def dms():
-            i = 0
-            length = len(bot.gateway.session.DMIDs)
-            while i < length:
-                if client.OwOID in bot.gateway.session.DMs[bot.gateway.session.DMIDs[i]]['recipients']:
-                    return bot.gateway.session.DMIDs[i]
-                else:
-                    i += 1
-
-        dmsid = dms()
-    except Exception as e:
-        print(str(e))
-        dmsid = None
 
     def SolveFree(image_url, captcha_mes):
         threadcaptcha = threading.Thread(name="captchamusic", target=captchamusic)
@@ -260,13 +246,13 @@ def CheckCaptcha(resp):
                 r = api.solve(Json={'data': encoded_string, 'len': captcha_mes[captcha_mes.find("letter word") - 2]})
                 if r:
                     print(f"{color.okcyan}[INFO] {color.reset}Solved Captcha [Code: {r['code']}]")
-                    bot.sendMessage(dmsid, r['code'])
+                    bot.sendMessage(client.dmsid, r['code'])
                     sleep(10)
-                    captcha_mes = bot.getMessages(dmsid)
+                    captcha_mes = bot.getMessages(client.dmsid)
                     try:
                         captcha_mes = json.loads(captcha_mes.text[1:-1]) if type(captcha_mes.json()) is list else {'author': {'id': '0'}}
-                    except Exception as e:
-                        print(str(e))
+                    except:
+
                         webhook.webhookping(client.username, client.userid)
                         threadcaptcha.start()
                         print(f"{color.okcyan}[INFO] {color.reset}There's An Issue With ReRunner")
@@ -292,8 +278,8 @@ def CheckCaptcha(resp):
                     threadcaptcha.start()
                     print(f"{color.okcyan}[INFO] {color.reset}Captcha Solver API Is Having An Issue...")
                     return "captcha"
-        except Exception as e:
-            print(str(e))
+        except:
+
             webhook.webhookping(client.username, client.userid)
             threadcaptcha.start()
             return "captcha"
@@ -305,7 +291,7 @@ def CheckCaptcha(resp):
             captcha_balance = solver.balance()
             print(f'Balance TwoCaptcha : {captcha_balance} $')
             print(f"{color.okcyan}[INFO] {color.reset}Solving Captcha at 1st chance: [Code: {r['code']}]")
-            bot.sendMessage(dmsid, r['code'])
+            bot.sendMessage(client.dmsid, r['code'])
             sleep(5)
             return r
 
@@ -328,11 +314,11 @@ def CheckCaptcha(resp):
                     return "captcha"
 
             answer = SolveCaptcha(encoded_string, count_len, hint, answer1, answer2, time)
-            mes = bot.getMessages(dmsid)
+            mes = bot.getMessages(client.dmsid)
             try:
                 mes = json.loads(msgs.text[1:-1]) if type(msgs.json()) is list else {'author': {'id': '0'}}
-            except Exception as e:
-                print(str(e))
+            except:
+
                 print(f"{color.okcyan}[INFO] {color.reset}There's An Issue With Re Runner")
                 webhook.webhookPing(f"=========================================================================================")
                 sleep(2)
@@ -443,14 +429,14 @@ def CheckCaptcha(resp):
     if resp.event.message:
         threadcaptcha = threading.Thread(name="captchamusic", target=captchamusic)
         m = resp.parsed.auto()
-        if m['channel_id'] == client.channel or m['channel_id'] == client.casino['channelcasinoid'] or m['channel_id'] == dmsid and not client.stopped:
+        if m['channel_id'] == client.channel or m['channel_id'] == client.casino['channelcasinoid'] or m['channel_id'] == client.dmsid and not client.stopped:
             if m['author']['id'] == client.OwOID or m['author']['username'] == 'OwO' or m['author']['discriminator'] == '8456':
                 if client.username in m['content'] and 'banned' in m['content'].lower():
                     client.stopped = True
                     print(f'{at()}{color.reset}{color.fail} !!! [BANNED] !!! {color.reset} Your Account Have Been Banned From OwO Bot Please Open An Issue On The Support Discord server')
                     return "captcha"
                 if client.username in m['content'] and any(captcha in m['content'].lower() for captcha in ['(1/5)', '(2/5)', '(3/5)', '(4/5)', '(5/5)']):
-                    msgs = bot.getMessages(dmsid)
+                    msgs = bot.getMessages(client.dmsid)
                     msgs = msgs.json()
                     if type(msgs) is dict:
                         client.stopped = True
@@ -869,89 +855,89 @@ def ElsaLoopie():
 
     change = main
 
-    try:
-        while True:
-            if client.stopped:
-                break
-            if not client.stopped:
-                # Hunt Mode
-                if time() - hunt > random.randint(15, 25) and not client.stopped and client.runner['hunt']:
-                    runner.hunt(client.username)
-                    hunt = time()
 
-                # Battle Mode
-                if time() - battle > random.randint(15, 22) and not client.stopped and client.runner['battle']:
-                    runner.battle(client.username)
-                    battle = time()
+    while True:
+        if client.stopped:
+            break
+        if not client.stopped:
+            # Hunt Mode
+            if time() - hunt > random.randint(15, 25) and not client.stopped and client.runner['hunt']:
+                runner.hunt(client.username)
+                hunt = time()
 
-                # Say owo Mode
-                if time() - owo > random.randint(15, 25) and not client.stopped and client.runner['owo']:
-                    runner.owo(client.username)
-                    owo = time()
-                # Buy Ring Mode
-                if time() - ring > random.randint(8, 15) and not client.stopped and client.runner['ring']:
-                    runner.ring(client.username)
-                    ring = time()
+            # Battle Mode
+            if time() - battle > random.randint(15, 22) and not client.stopped and client.runner['battle']:
+                runner.battle(client.username)
+                battle = time()
 
-                # Pray/Curse Mode
-                if time() - pray > random.randint(300, 400) and not client.stopped and client.praycurse['enable']:
-                    runner.praycurse(client.username)
-                    pray = time()
+            # Say owo Mode
+            if time() - owo > random.randint(15, 25) and not client.stopped and client.runner['owo']:
+                runner.owo(client.username)
+                owo = time()
+            # Buy Ring Mode
+            if time() - ring > random.randint(8, 15) and not client.stopped and client.runner['ring']:
+                runner.ring(client.username)
+                ring = time()
 
-                # Spam Mode
-                if time() - exp > random.randint(20, 40) and not client.stopped and client.exp['enable']:
-                    spam.exp(client.exp['channelspamid'], client.username)
-                    exp = time()
+            # Pray/Curse Mode
+            if time() - pray > random.randint(300, 400) and not client.stopped and client.praycurse['enable']:
+                runner.praycurse(client.username)
+                pray = time()
 
-                # Sleep Mode
-                if time() - main > client.sleep['time'] and not client.stopped and client.sleep['enable']:
-                    main = time()
-                    print(f"{at()}{color.reset}{color.okblue} [INFO]{color.reset} Sleeping")
-                    sleep(client.sleep['duration'])
-                # subprocess.call(sys.executable + ' "' + os.path.realpath(__file__) + '"')
-                # os.system('python "elsaowo.py"')
+            # Spam Mode
+            if time() - exp > random.randint(20, 40) and not client.stopped and client.exp['enable']:
+                spam.exp(client.exp['channelspamid'], client.username)
+                exp = time()
 
-                # Daily Mode
-                if time() - daily > int(client.wait_time_daily) and not client.stopped and client.runner['daily']:
-                    client.wait_time_daily = runner.daily(client.username)
-                    daily = time()
+            # Sleep Mode
+            if time() - main > client.sleep['time'] and not client.stopped and client.sleep['enable']:
+                main = time()
+                print(f"{at()}{color.reset}{color.okblue} [INFO]{color.reset} Sleeping")
+                sleep(client.sleep['duration'])
+            # subprocess.call(sys.executable + ' "' + os.path.realpath(__file__) + '"')
+            # os.system('python "elsaowo.py"')
 
-                # Hunt_bot Mode
-                if time() - hunt_bot > int(client.wait_time_huntbot) and not client.stopped and client.huntbot['enable']:
-                    client.wait_time_huntbot = runner.huntbot(client.username)
-                    hunt_bot = time()
+            # Daily Mode
+            if time() - daily > int(client.wait_time_daily) and not client.stopped and client.runner['daily']:
+                client.wait_time_daily = runner.daily(client.username)
+                daily = time()
 
-                # Sell Mode
-                if client.sell['enable'] and not client.stopped:
-                    if time() - sell > random.randint(600, 1000):
-                        sell = time()
-                        runner.sell(client.username)
+            # Hunt_bot Mode
+            if time() - hunt_bot > int(client.wait_time_huntbot) and not client.stopped and client.huntbot['enable']:
+                client.wait_time_huntbot = runner.huntbot(client.username)
+                hunt_bot = time()
 
-                # Change Channel Mode
-                if client.exp['changechannel'] and client.exp['enable'] and not client.stopped:
-                    if time() - change > random.randint(600, 1500) and not client.stopped:
-                        change = time()
-                        guild_spam_id = bot.getChannel(client.channelspambackup).json()['guild_id']
-                        channels_spam = bot.gateway.session.guild(guild_spam_id).channels
-                        channel = runner.changeChannel(channels_spam)
-                        client.exp['channelspamid'] = channel[0]
-                        print(f"{at()}{color.reset}{color.okcyan} [INFO] {color.reset} Changed Channel Spaming To : {channel[1]}")
+            # Sell Mode
+            if client.sell['enable'] and not client.stopped:
+                if time() - sell > random.randint(600, 1000):
+                    sell = time()
+                    runner.sell(client.username)
 
-                # Coin Flip
-                if time() - coin_flip > random.randint(17, 28) and not client.stopped:
-                    if client.casino['cf']['enable'] and client.casino['enable'] and not client.checknocash:
-                        casino.CoinFlip(client.currentcfbet)
-                    coin_flip = time()
+            # Change Channel Mode
+            if client.exp['changechannel'] and client.exp['enable'] and not client.stopped:
+                if time() - change > random.randint(600, 1500) and not client.stopped:
+                    change = time()
+                    guild_spam_id = bot.getChannel(client.channelspambackup).json()['guild_id']
+                    channels_spam = bot.gateway.session.guild(guild_spam_id).channels
+                    channel = runner.changeChannel(channels_spam)
+                    client.exp['channelspamid'] = channel[0]
+                    print(f"{at()}{color.reset}{color.okcyan} [INFO] {color.reset} Changed Channel Spaming To : {channel[1]}")
 
-                # Slot
-                if time() - slot > random.randint(17, 28) and not client.stopped:
-                    if client.casino['os']['enable'] and client.casino['enable'] and not client.checknocash:
-                        casino.Slot(client.currentosbet)
-                    slot = time()
+            # Coin Flip
+            if time() - coin_flip > random.randint(17, 28) and not client.stopped:
+                if client.casino['cf']['enable'] and client.casino['enable'] and not client.checknocash:
+                    casino.CoinFlip(client.currentcfbet)
+                coin_flip = time()
 
-                sleep(0.1)
-    except Exception as e:
-        print(str(e))
+            # Slot
+            if time() - slot > random.randint(17, 28) and not client.stopped:
+                if client.casino['os']['enable'] and client.casino['enable'] and not client.checknocash:
+                    casino.Slot(client.currentosbet)
+                slot = time()
+
+            sleep(0.1)
+
+
 
 def loopie():
     ElsaLoopie()

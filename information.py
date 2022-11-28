@@ -14,6 +14,7 @@ class information:
     def __init__(self):
         self.wbm = [13, 18]
         self.OwOID = '408785106942164992'
+        self.dmsid = ''
         self.totalcmd = 0
         self.totaltext = 0
         self.username = ""
