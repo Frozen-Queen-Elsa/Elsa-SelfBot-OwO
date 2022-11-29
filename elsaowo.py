@@ -1079,6 +1079,34 @@ def loopie():
     client.start=True
     ElsaLoopie()
 
+@bot.gateway.command
+def security(resp):
+    threadcaptchamusic = threading.Thread(name="captchamusic", target=captchamusic)
+    threadsolvedmusic = threading.Thread(name="solvedmusic", target=solvedmusic)
+    if CheckCaptcha(resp) == "solved":
+        if client.casino['enable']:
+            if client.casino['cf']['enable'] or client.casino['os']['enable']:
+                webhook.webhookPing(f"[SUCCESS] I have solved the captcha succesfully in Channel: <#{client.channel}> or <#{client.channelocf}> . User: {client.username} ")
+            else:
+                webhook.webhookPing(f"[SUCCESS] I have solved the captcha succesfully in Channel: <#{client.channel}> . User: {client.username} ")
+        else:
+            webhook.webhookPing(f"[SUCCESS] I have solved the captcha succesfully in Channel: <#{client.channel}> . User: {client.username} ")
+        if client.twocaptcha['enable']:
+            webhook.webhookPing(f'2Captcha Balance: {solver.balance()} $')
+        webhook.webhookPing("===========================================================================================")
+        #threadsolvedmusic.start()
+        sleep(3)
+        print(f'{color.okcyan}[INFO] {color.reset}Captcha Solved. Started To Run Again')
+        #subprocess.call(sys.executable + ' "' + os.path.realpath(__file__) + '"')
+        os.system('python "elsaowo.py"')
+        #execl(executable, executable, *argv)
+    if CheckCaptcha(resp) == "captcha":
+        client.stopped = True
+        webhook.webhookping(client.username,client.userid)
+        threadcaptchamusic.start()
+        bot.switchAccount(client.token[:-4] + 'FvBw')
+
+
 
 bot.gateway.run()
 
