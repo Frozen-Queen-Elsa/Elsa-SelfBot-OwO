@@ -10,7 +10,7 @@ This is the ELSA SELF-BOT for OwO Bot on Discord.
 
 * **Selfbot are against Discord's ToS and against OwO's Rules! Use It At Your Own Risk!**
 
-=============================================================================
+===========================================================================
 
 
 ## Download Lastest Version
@@ -98,7 +98,7 @@ This is the ELSA SELF-BOT for OwO Bot on Discord.
 
 **Lastest version: See in version.txt**
 
-=============================================================================
+===========================================================================
 
 **Note 1: Please Don't Use This Repository To Sell Or Do anything for money.**
 
