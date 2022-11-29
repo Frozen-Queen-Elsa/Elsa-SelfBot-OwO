@@ -112,7 +112,7 @@ while True:
             print(f'{color.okcyan}You are using free version for solving captcha')
             print(f'Join this server to register solving system https://dsc.gg/serverafs {color.reset}')
         else:
-            print(f'{color.yellow}You are using vip version for solving captcha by TwoCaptcha{color.reset}')
+            print(f'{color.warning}You are using vip version for solving captcha by TwoCaptcha{color.reset}')
         break
 
     elif choice == "2":
@@ -750,7 +750,7 @@ def CheckHuntBot(resp):
                         print(f"{at()}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} You dont have enough Cowocy")
         if client.twocaptcha['enable']:
             encoded_string = b64encode(get(image_url).content).decode('utf-8')
-            countlen = int(msgs[msgs.find("letter word") - 2])
+            countlen = 5 #password always has 5 characters
             captchabalance = solver.balance()
             if captchabalance == 0:
                 print(f'Balance 2CAPCHA : {captchabalance} $ Out of money')
@@ -761,7 +761,7 @@ def CheckHuntBot(resp):
                 r = getPassword(encoded_string, countlen,0)
 
                 captchabalance = solver.balance()
-                print(f'Balance 2CAPCHA : {captchabalance} $')
+                print(f'Balance TwoCaptcha : {captchabalance} $')
                 print(f"{color.okcyan}[INFO] {color.reset}Solving Password at 1st chance: [Code: {r['code']}]")
 
                 bot.typingAction(str(client.channel))
@@ -781,7 +781,7 @@ def CheckHuntBot(resp):
                         print(f"{at()}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} Password huntbot is wrong.Try again")
                         r2 = getPassword(encoded_string, countlen,r['code'])
                         captchabalance = solver.balance()
-                        print(f'Balance 2CAPCHA : {captchabalance} $')
+                        print(f'Balance TwoCaptcha : {captchabalance} $')
                         print(f"{color.okcyan}[INFO] {color.reset}Solving Password at 2nd chance: [Code: {r2['code']}]")
 
                         bot.typingAction(str(client.channel))
@@ -810,7 +810,7 @@ def CheckHuntBot(resp):
     if resp.event.message:
         m = resp.parsed.auto()
         if m['channel_id'] == client.channel and client.username in m['content'] and "here is your password" in m['content'].lower() and m['attachments'] and not client.stopped:
-            print(f'{at()}{color.warning} !! [HUNTBOT] !! {color.reset} Huntbot Password REQUİRED')
+            print(f'{at()}{color.warning} !! [HUNT BOT] !! {color.reset} Hunt Bot Password REQUİRED')
             print(f"{at()}{color.okblue} [INFO] {color.reset} Waiting solving Password")
             sleep(3)
             return solvepassword(m['attachments'][0]['url'], m['content'])
