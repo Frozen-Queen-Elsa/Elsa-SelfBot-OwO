@@ -203,6 +203,11 @@ def on_ready(resp):
         print('═' * 25)
         loopie()
 
+if False in bot.checkToken(client.token):
+	print(f"{color.fail}[ERROR]{color.reset} Invalid Token")
+	sleep(5)
+	raise SystemExit
+
 
 @bot.gateway.command
 def CheckCaptcha(resp):
