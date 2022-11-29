@@ -379,7 +379,7 @@ def sound(data, all):
 def webhook(data, all):
     print("")
     data['webhook']['enable'] = input("Toggle Discord Webhook, Enter Webhook Link If You Want It To Ping You If OwO Asked Captcha. Otherwise Enter \"None\": ")
-    if data['webhook']['enable'].lowwer() == "none":
+    if data['webhook']['enable'].lower() == "none":
         data['webhook']['enable'] == False
     else:
         data['webhook']['link'] = data['webhook']['enable']
