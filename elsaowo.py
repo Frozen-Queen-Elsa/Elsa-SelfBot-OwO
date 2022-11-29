@@ -299,7 +299,7 @@ def CheckCaptcha(resp):
         if client.twocaptcha['enable'] and 1 <= time <= 3:
             client.stopped = True
             encoded_string = b64encode(get(image_url).content).decode('utf-8')
-            count_len = int(msgs[msgs.find("letter word") - 2])
+            count_len = int(captcha_mes[captcha_mes.find("letter word") - 2])
 
             # Check balance of 2Captcha
             captcha_balance = solver.balance()
