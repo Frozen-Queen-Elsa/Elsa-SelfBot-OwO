@@ -4,10 +4,26 @@ This is the ELSA SELF-BOT for OwO Bot on Discord.
 
 * This Auto uses Python and Selenium
 
+
+
+* **Keep In Mind This Repository Is For Educational Purposes Only.** 
+
+* **Selfbot are against Discord's ToS and against OwO's Rules! Use It At Your Own Risk!**
+
+=============================================================================
+
+
+## Download Lastest Version
+* ### [Download Lastest Self-bot Release](https://github.com/Frozen-Queen-Elsa/Elsa-SelfBot-OwO/releases)
+
+* ### [Download Lastest Modded Simple Version Release](https://github.com/FrozenQueenElsa0903/Elsa-Owo-Selfbot-ver-Simple/releases)
+
+* ### [Download Lastest Modded Full VersionRelease](https://github.com/FrozenQueenElsa0903/Elsa-Owo-Selfbot-ver-Full/releases)
+* ### [Download Lastest Origin Release](https://github.com/ahihiyou20/discord-selfbot-owo-bot/release)
+
 ## Installation
 
 **Step 1: Install Selenium and Chrome Driver**
-
 
 * Open chrome and go to [chrome://version/](chrome://version), check the version of Chrome you are using
 * Go to [https://chromedriver.chromium.org/downloads](https://chromedriver.chromium.org/downloads) and download the current release Chrome Driver for your Chrome version
@@ -29,7 +45,6 @@ This is the ELSA SELF-BOT for OwO Bot on Discord.
 **Step 5: Run the Self-Bot**
 * Open a file name **run.bat** or **elsaowo.py** to run the bot and that's all
 
-**=============================================================================**
 
 ## Settings 
 **> token = Input your token**
@@ -70,5 +85,22 @@ This is the ELSA SELF-BOT for OwO Bot on Discord.
 * Thanks to *Bơ Bịp* for testing bot 
 
 ## License
+**This Repository Is Under [MIT LICENSE](https://choosealicense.com/licenses/mit/) !**
 
-[MIT LICENSE](https://choosealicense.com/licenses/mit/)
+## Notes
+**Your Account Must Have A Valid OwO Profile Already, This Bot Can't Run Efficiency On New Generated Accounts.**
+
+**You Need A Team (Army) And Some Gems Before Start Botting, That's Because This Bot cant' Build A Perfect Account From Zero Yet.**
+
+**If you want to use the VIP solve the captcha, you must have the 2Captcha API. You can buy it at [https://2captcha.com/](https://2captcha.com/)**
+
+**Feel Free To Open Issue On Github!**
+
+**Lastest version: See in version.txt**
+
+=============================================================================
+
+**Note 1: Please Don't Use This Repository To Sell Or Do anything for money.**
+
+**Note 2: This Repository Is For Educational Purposes Only. Selfbot are against Discord's ToS and against OwO's Rules! Use It At Your Own Risk!**
+
