@@ -9,7 +9,7 @@ This is the ELSA SELF-BOT for OwO Bot on Discord.
 **Step 1: Install Selenium and Chrome Driver**
 
 
-* Open chrome and go to [chrome://version/](chrome://version), check the version of Chrome you are using
+* Open chrome and go to [chrome://version/](chrome://version) , check the version of Chrome you are using
 * Go to [https://chromedriver.chromium.org/downloads](https://chromedriver.chromium.org/downloads) and download the current release Chrome Driver for your Chrome version
 * Copy the file you download and paste it into the folder of the project
 
