@@ -14,6 +14,16 @@ from re import findall
 import json
 import threading
 
+import base64
+import requests
+
+from colorama import init
+
+init()
+
+
+
+
 try:
     from playsound import playsound
     from twocaptcha import TwoCaptcha
@@ -61,7 +71,7 @@ def signal_handler(sig: object, frame: object):
     print(f"\n{color.fail}[INFO] {color.reset}Detected Ctrl + C, Stopping...")
     raise KeyboardInterrupt
 
-
+client.start=False
 signal(SIGINT, signal_handler)
 token = client.token
 # Bot Information
@@ -102,7 +112,7 @@ while True:
             print(f'{color.okcyan}You are using free version for solving captcha')
             print(f'Join this server to register solving system https://dsc.gg/serverafs {color.reset}')
         else:
-            print(f'{color.okcyan}You are using vip version for solving captcha by TwoCaptcha{color.reset}')
+            print(f'{color.yellow}You are using vip version for solving captcha by TwoCaptcha{color.reset}')
         break
 
     elif choice == "2":
@@ -201,12 +211,13 @@ def on_ready(resp):
         print(f"{color.purple}Sound: {client.sound}{color.reset}")
         print(f"{color.purple}----------------------------------{color.reset}")
         print('═' * 25)
-        loopie()
+        if client.start==False:
+            loopie()
 
 if False in bot.checkToken(client.token):
-	print(f"{color.fail}[ERROR]{color.reset} Invalid Token")
-	sleep(5)
-	raise SystemExit
+    print(f"{color.fail}[ERROR]{color.reset} Invalid Token")
+    sleep(5)
+    raise SystemExit
 
 
 @bot.gateway.command
@@ -290,7 +301,7 @@ def CheckCaptcha(resp):
             return "captcha"
 
     def SolveCaptcha(captcha, len, hint, answer1, answer2, time):
-        if time > 3 or time < 1:
+        if 1<=time <= 3 :
             # Solve by 2Captcha
             r = getAnswer(captcha, len, hint, answer1, answer2)
             captcha_balance = solver.balance()
@@ -304,7 +315,7 @@ def CheckCaptcha(resp):
         if client.twocaptcha['enable'] and 1 <= time <= 3:
             client.stopped = True
             encoded_string = b64encode(get(image_url).content).decode('utf-8')
-            count_len = int(captcha_mes[captcha_mes.find("letter word") - 2])
+            count_len = int(captcha_mes[captcha_mes.index("letter word") - 2])
 
             # Check balance of 2Captcha
             captcha_balance = solver.balance()
@@ -321,17 +332,18 @@ def CheckCaptcha(resp):
             answer = SolveCaptcha(encoded_string, count_len, hint, answer1, answer2, time)
             mes = bot.getMessages(client.dmsid)
             try:
-                mes = json.loads(msgs.text[1:-1]) if type(msgs.json()) is list else {'author': {'id': '0'}}
+                mes = json.loads(mes.text[1:-1]) if type(mes.json()) is list else {'author': {'id': '0'}}
             except:
 
                 print(f"{color.okcyan}[INFO] {color.reset}There's An Issue With Re Runner")
+                webhook.webhookPing(f"<@{client.webhook['pingid']}> There's An Issue With Re Runner . User: {client.username} <@{client.userid}>")
                 webhook.webhookPing(f"=========================================================================================")
                 sleep(2)
                 return "captcha"
-            if mes['author']['id'] == client.OwOID and "verified" in msgs['content']:
+            if mes['author']['id'] == client.OwOID and "verified" in mes['content']:
                 solver.report(answer['captchaId'], True)
                 return "solved"
-            if mes['author']['id'] == client.OwOID and "Wrong verification code" in msgs['content']:
+            if mes['author']['id'] == client.OwOID and "Wrong verification code" in mes['content']:
                 webhook.webhookping(client.username, client.userid)
                 webhook.webhookPing(f"<@{client.webhook['pingid']}> [FAIL]I have solved the captcha fail in the 1st chance. Wait me at the 2nd chance. Sorry . User: {client.username} <@{client.userid}>")
                 solver.report(answer['captchaId'], False)  # Báo kết quả sai
@@ -342,7 +354,7 @@ def CheckCaptcha(resp):
                     TextWrong = 'IS WRONG'
                     TextJoin = [answer1.upper(), TextWrong.lower()]
                     hint = ' '.join(TextJoin)
-                    SolveVIP(image_url, msgs, hint, answer1, 0, time)
+                    SolveVIP(image_url, captcha_mes, hint, answer1, 0, time)
 
                 if time == 2:
                     time += 1
@@ -350,7 +362,7 @@ def CheckCaptcha(resp):
                     TextWrong = 'ARE WRONG'
                     TextJoin = [answer1.upper(), 'and', answer2.upper(), TextWrong.lower()]
                     hint = ' '.join(TextJoin)
-                    SolveVIP(image_url, msgs, hint, answer1, answer2, time)
+                    SolveVIP(image_url, captcha_mes, hint, answer1, answer2, time)
                 if time == 3:
                     return 'captcha'
             return 'captcha'
@@ -688,6 +700,123 @@ def CheckHunt(resp):
                             webhook.webhookPing(f"https://discord.com/channels/{client.guild_id}/{m['channel_id']}/{m['id']}")
                             print(f"You found Special Pet by hunting at channel {channelname} in server {client.guild_name} with message id is {m['id']}")
 
+@bot.gateway.command
+def CheckHuntBot(resp):
+    def getPassword(img, lenghth,code):
+        count = 0
+        timeanswer = time()
+        while True:
+            count += 1
+            r = solver.normal(img, numeric=2, minLen=lenghth, maxLen=lenghth, phrase=0, caseSensitive=0, calc=0, lang='en' )
+
+            if r['code'].isalpha():
+                if len(r['code']) == lenghth:
+                    if r['code'] !=code:
+                        print('Check result 2captcha')
+                        return r
+                    else:
+                        solver.report(r['captchaId'], False)
+                        print(f'Time: {count}. The result {r["code"]} is not right.Try again')
+                else:
+                    solver.report(r['captchaId'], False)
+                    print(f'Time: {count}. The length of result {r["code"]} is not right.Try again')
+            else:
+                solver.report(r['captchaId'], False)
+                print(f'Time: {count}. The result {r["code"]} contants number.Try again')
+
+    def solvepassword(image_url,msgs):
+        if not client.twocaptcha['enable'] and client.solve['enable']:
+            user = bot.gateway.session.user
+            from api import CAPI
+            api = CAPI(client.userid, client.solve['server'])
+            encoded_string = b64encode(get(image_url).content).decode('utf-8')
+            r = api.solve(Json={'data': encoded_string, 'len': msgs[msgs.find("letter word") - 2]})
+            if r:
+                ui.slowPrinting(f"{color.okcyan}[INFO] {color.reset}Solved Password huntbot [Code: {r['code']}]")
+                bot.typingAction(str(client.channel))
+                sleep(3)
+                bot.sendMessage(str(client.channel), f"owo hb 30000 {r['code']}")
+                print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} owo hb 30000 {r['code']}")
+                msgs = bot.getMessages(str(client.channel), num=10)
+                msgs = msgs.json()
+                for i in range(len(msgs)):
+                    if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'I WILL BE BACK IN' in msgs[i]['content'] and not client.stopped:
+                        api.report(Json={'captchaId': r['captchaId'], 'correct': 'True'})
+                        print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [INFO] {color.reset} Password huntbot is right")
+                    if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'WRONG PASSWORD' in msgs[i]['content'] and not client.stopped:
+                        api.report(Json={'captchaId': r['captchaId'], 'correct': 'False'})
+                        print(f"{at()}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} Password huntbot is wrong")
+                    if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'have enough' in msgs[i]['content'] and not client.stopped:
+                        print(f"{at()}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} You dont have enough Cowocy")
+        if client.twocaptcha['enable']:
+            encoded_string = b64encode(get(image_url).content).decode('utf-8')
+            countlen = int(msgs[msgs.find("letter word") - 2])
+            captchabalance = solver.balance()
+            if captchabalance == 0:
+                print(f'Balance 2CAPCHA : {captchabalance} $ Out of money')
+                webhook.webhookPing(f"<@{client.webhook['pingid']}> [FAIL]Out of money . User: {client.username} <@{client.userid}>")
+                webhook.webhookPing(f"=========================================================================================")
+                print(f"{at()}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} You dont have enough Money in 2Captcha Balance")
+                # Solve by 2Captcha
+                r = getPassword(encoded_string, countlen,0)
+
+                captchabalance = solver.balance()
+                print(f'Balance 2CAPCHA : {captchabalance} $')
+                print(f"{color.okcyan}[INFO] {color.reset}Solving Password at 1st chance: [Code: {r['code']}]")
+
+                bot.typingAction(str(client.channel))
+                sleep(3)
+                bot.sendMessage(str(client.channel), f"owo hb 30000 {r['code']}")
+                print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} owo hb 30000 {r['code']}")
+
+                msgs = bot.getMessages(str(client.channel), num=10)
+                msgs = msgs.json()
+                for i in range(len(msgs)):
+                    if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'I WILL BE BACK IN' in msgs[i]['content'] and not client.stopped:
+                        solver.report(r['captchaId'], True)
+                        print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [INFO] {color.reset} Password huntbot is right")
+
+                    if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'WRONG PASSWORD' in msgs[i]['content'] and not client.stopped:
+                        solver.report(r['captchaId'], False)
+                        print(f"{at()}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} Password huntbot is wrong.Try again")
+                        r2 = getPassword(encoded_string, countlen,r['code'])
+                        captchabalance = solver.balance()
+                        print(f'Balance 2CAPCHA : {captchabalance} $')
+                        print(f"{color.okcyan}[INFO] {color.reset}Solving Password at 2nd chance: [Code: {r2['code']}]")
+
+                        bot.typingAction(str(client.channel))
+                        sleep(3)
+                        bot.sendMessage(str(client.channel), f"owo hb 30000 {r['code']}")
+                        print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} owo hb 30000 {r['code']}")
+
+                        msgs = bot.getMessages(str(client.channel), num=10)
+                        msgs = msgs.json()
+                        for i in range(len(msgs)):
+                            if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'I WILL BE BACK IN' in msgs[i]['content'] and not client.stopped:
+                                solver.report(r['captchaId'], True)
+                                print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [INFO] {color.reset} Password huntbot is right")
+
+                            if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'WRONG PASSWORD' in msgs[i]['content'] and not client.stopped:
+                                solver.report(r['captchaId'], True)
+                                print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [INFO] {color.reset} Password huntbot is Wrong")
+
+                            if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'have enough' in msgs[i]['content'] and not client.stopped:
+                                print(f"{at()}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} You dont have enough Cowocy")
+
+                    if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'have enough' in msgs[i]['content'] and not client.stopped:
+                        print(f"{at()}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} You dont have enough 30k Cowocy")
+
+
+    if resp.event.message:
+        m = resp.parsed.auto()
+        if m['channel_id'] == client.channel and client.username in m['content'] and "here is your password" in m['content'].lower() and m['attachments'] and not client.stopped:
+            print(f'{at()}{color.warning} !! [HUNTBOT] !! {color.reset} Huntbot Password REQUİRED')
+            print(f"{at()}{color.okblue} [INFO] {color.reset} Waiting solving Password")
+            sleep(3)
+            return solvepassword(m['attachments'][0]['url'], m['content'])
+
+
+
 
 # Gems
 @bot.gateway.command
@@ -945,6 +1074,7 @@ def ElsaLoopie():
 
 
 def loopie():
+    client.start=True
     ElsaLoopie()
 
 
