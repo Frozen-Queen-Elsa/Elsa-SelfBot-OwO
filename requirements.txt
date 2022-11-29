@@ -1,4 +1,4 @@
-git+https://github.com/ericz/Discord-S.C.U.M
+discum
 discord_webhook
 inputimeout
 playsound==1.2.2
