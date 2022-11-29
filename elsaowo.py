@@ -926,7 +926,7 @@ def ElsaLoopie():
                     channels_spam = bot.gateway.session.guild(guild_spam_id).channels
                     channel = runner.changeChannel(channels_spam)
                     client.exp['channelspamid'] = channel[0]
-                    print(f"{at()}{color.reset}{color.okcyan} [INFO] {color.reset} Changed Channel Spaming To : {channel[1]}")
+                    print(f"{at()}{color.reset}{color.okcyan} [INFO] {color.yellow} Changed Channel Spaming To : {color.cyan}{channel[1]}{color.reset}")
 
             # Coin Flip
             if time() - coin_flip > random.randint(17, 28) and not client.stopped:
