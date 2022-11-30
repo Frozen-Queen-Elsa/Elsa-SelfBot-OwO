@@ -28,7 +28,7 @@ elsa = '''\
 
 
 def main():
-    with open("statussetting.json", "r", encoding='utf-8') as f:
+    with open("..\src\statussetting.json", "r", encoding='utf-8') as f:
         data = load(f)
     print(f'{color.okcyan}{elsa}{color.reset}')
     print(f"                   {color.purple}Version: {version} {color.reset}")
@@ -82,7 +82,7 @@ def status(data, all):
     else:
         print(f'{color.fail}Wrong Input{color.reset}')
         status(data, all)
-    file = open("statussetting.json", "w", encoding='utf-8')
+    file = open("..src\statussetting.json", "w", encoding='utf-8')
     dump(data, file, indent=4,ensure_ascii=False)
     file.close()
     print(f"{color.okgreen}[INFO] {color.okcyan}Successfully Saved!{color.reset}")

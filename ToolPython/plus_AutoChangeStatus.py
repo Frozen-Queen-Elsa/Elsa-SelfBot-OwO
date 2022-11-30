@@ -82,7 +82,7 @@ def on_ready(resp: object) -> None:
         ChangeStatus()
 
 def ChangeStatus():
-    with open('statussetting.json', "r", encoding='utf-8') as file:
+    with open('..\src\statussetting.json', "r", encoding='utf-8') as file:
         data = json.load(file)
         status = data['status']
     count = 1
