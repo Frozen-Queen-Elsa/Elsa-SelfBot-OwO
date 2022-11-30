@@ -956,12 +956,14 @@ def CheckBalance(resp):
         if client.casino['cf']['enable'] or client.casino['os']['enable']:
             if resp.event.message_updated:
                 m = resp.parsed.auto()
+
                 if m['author']['id'] == client.OwOID and client.username in m['content'] and 'you currently have' in m['content']:
                     client.cash = findall('[0-9]+', m['content'])
                     print("{}You currently have: {} Cowoncy! {}".format(color.warning, ','.join(client.cash[1::]), color.reset))
                 if client.username in m['content'] and 'You don\'t have enough cowoncy!' in m['content']:
                     print(f"{color.fail} [ERROR] Not Enough Cowoncy To Continue! {color.reset}")
                     client.checknocash = True
+
 
 
 def ElsaLoopie():
