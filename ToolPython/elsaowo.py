@@ -503,7 +503,7 @@ def CheckCaptcha(resp):
 def CheckPrefix(resp):
     if client.prefix['enable']:
         prefix = client.prefix['key']
-        with open("owosettings.json", "r") as f:
+        with open("..\src\owosettings.json", "r") as f:
             data = json.load(f)
             if resp.event.message:
                 m = resp.parsed.auto()
@@ -529,7 +529,7 @@ def CheckPrefix(resp):
                                 client.gem['enable'] = True
                                 bot.sendMessage(str(m['channel_id']), f"{client.username} Turned on Gems Mode")
                                 print(f"{color.okcyan}[INFO] Turned On Gems Mode{color.okcyan}")
-                                file = open("owosettings.json", "w")
+                                file = open("..\src\owosettings.json", "w")
                                 data['gem']['enable'] = True
                                 json.dump(data, file)
                                 file.close()
@@ -537,7 +537,7 @@ def CheckPrefix(resp):
                                 client.gem['enable'] = False
                                 bot.sendMessage(str(m['channel_id']), f"{client.username} Turned Off Gems Mode")
                                 print(f"{color.okcyan}[INFO] Turned On Gems Mode{color.okcyan}")
-                                file = open("owosettings.json", "w")
+                                file = open("..\src\owosettings.json", "w")
                                 data['gem']['enable'] = False
                                 json.dump(data, file)
                                 file.close()
@@ -546,7 +546,7 @@ def CheckPrefix(resp):
                                 client.praycurse['enable'] = True
                                 bot.sendMessage(str(m['channel_id']), f"{client.username} Turned on Pray/Curse Mode")
                                 print(f"{color.okcyan}[INFO] Turned On Pray/Curse Mode{color.okcyan}")
-                                file = open("owosettings.json", "w")
+                                file = open("..\src\owosettings.json", "w")
                                 data['praycurse']['enable'] = True
                                 json.dump(data, file)
                                 file.close()
@@ -554,7 +554,7 @@ def CheckPrefix(resp):
                                 client.praycurse['enable'] = False
                                 bot.sendMessage(str(m['channel_id']), f"{client.username} Turned Off Pray/Curse Mode")
                                 print(f"{color.okcyan}[INFO] Turned On Pray/Curse Mode{color.okcyan}")
-                                file = open("owosettings.json", "w")
+                                file = open("..\src\owosettings.json", "w")
                                 data['praycurse']['enable'] = False
                                 json.dump(data, file)
                                 file.close()
@@ -563,7 +563,7 @@ def CheckPrefix(resp):
                                 client.sleep['enable'] = True
                                 bot.sendMessage(str(m['channel_id']), f"{client.username} Turned on Sleep Mode")
                                 print(f"{color.okcyan}[INFO] Turned On Sleep Mode{color.okcyan}")
-                                file = open("owosettings.json", "w")
+                                file = open("..\src\owosettings.json", "w")
                                 data['sleep']['enable'] = True
                                 json.dump(data, file)
                                 file.close()
@@ -571,7 +571,7 @@ def CheckPrefix(resp):
                                 client.sleep['enable'] = False
                                 bot.sendMessage(str(m['channel_id']), f"{client.username} Turned Off Sleep Mode")
                                 print(f"{color.okcyan}[INFO] Turned On Sleep Mode{color.okcyan}")
-                                file = open("owosettings.json", "w")
+                                file = open("..\src\owosettings.json", "w")
                                 data['sleep']['enable'] = False
                                 json.dump(data, file)
                                 file.close()
@@ -580,7 +580,7 @@ def CheckPrefix(resp):
                                 client.sell['enable'] = True
                                 bot.sendMessage(str(m['channel_id']), f"{client.username} Turned on Sell Mode")
                                 print(f"{color.okcyan}[INFO] Turned On Sell Mode{color.okcyan}")
-                                file = open("owosettings.json", "w")
+                                file = open("..\src\owosettings.json", "w")
                                 data['sell']['enable'] = True
                                 json.dump(data, file)
                                 file.close()
@@ -588,7 +588,7 @@ def CheckPrefix(resp):
                                 client.sell['enable'] = False
                                 bot.sendMessage(str(m['channel_id']), f"{client.username} Turned Off Sell Mode")
                                 print(f"{color.okcyan}[INFO] Turned On Sell Mode{color.okcyan}")
-                                file = open("owosettings.json", "w")
+                                file = open("..\src\owosettings.json", "w")
                                 data['sell']['enable'] = False
                                 json.dump(data, file)
                                 file.close()
@@ -597,7 +597,7 @@ def CheckPrefix(resp):
                                 client.exp['enable'] = True
                                 bot.sendMessage(str(m['channel_id']), f"{client.username} Turned on Exp Mode")
                                 print(f"{color.okcyan}[INFO] Turned On Exp Mode{color.okcyan}")
-                                file = open("owosettings.json", "w")
+                                file = open("..\src\owosettings.json", "w")
                                 data['exp']['enable'] = True
                                 json.dump(data, file)
                                 file.close()
@@ -605,7 +605,7 @@ def CheckPrefix(resp):
                                 client.exp['enable'] = False
                                 bot.sendMessage(str(m['channel_id']), f"{client.username} Turned Off Exp Mode")
                                 print(f"{color.okcyan}[INFO] Turned On Exp Mode{color.okcyan}")
-                                file = open("owosettings.json", "w")
+                                file = open("..\src\owosettings.json", "w")
                                 data['exp']['enable'] = False
                                 json.dump(data, file)
                                 file.close()
@@ -614,7 +614,7 @@ def CheckPrefix(resp):
                                 client.huntbot['enable'] = True
                                 bot.sendMessage(str(m['channel_id']), f"{client.username} Turned on Hunt Bot Mode")
                                 print(f"{color.okcyan}[INFO] Turned On Hunt Bot Mode{color.okcyan}")
-                                file = open("owosettings.json", "w")
+                                file = open("..\src\owosettings.json", "w")
                                 data['huntbot']['enable'] = True
                                 json.dump(data, file)
                                 file.close()
@@ -622,7 +622,7 @@ def CheckPrefix(resp):
                                 client.exp['enable'] = False
                                 bot.sendMessage(str(m['channel_id']), f"{client.username} Turned Off Hunt Bot Mode")
                                 print(f"{color.okcyan}[INFO] Turned On Hunt Bot Mode{color.okcyan}")
-                                file = open("owosettings.json", "w")
+                                file = open("..\src\owosettings.json", "w")
                                 data['huntbot']['enable'] = False
                                 json.dump(data, file)
                                 file.close()
