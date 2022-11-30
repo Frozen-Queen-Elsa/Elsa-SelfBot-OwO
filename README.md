@@ -25,7 +25,7 @@ This is the ELSA SELF-BOT for OwO Bot on Discord.
 
 ## Installation and Use by Python
 
-=====================================================================================
+==========================================================================
 
 ### Method 1: File .exe
 
@@ -47,7 +47,7 @@ This is the ELSA SELF-BOT for OwO Bot on Discord.
 
 * In folder named "ToolExe" run **3_Elsa_SelfBot_OwO.exe**
 
-=====================================================================================
+==========================================================================
 ### Method 2: File .py
 
 **Step 1: Install Python**
@@ -72,7 +72,7 @@ This is the ELSA SELF-BOT for OwO Bot on Discord.
 
 * In folder named "ToolPython" than open a file name **run.bat** or **elsaowo.py** to run the bot and that's all
 
-=====================================================================================
+==========================================================================
 
 ## Settings 
 **> token = Input your token**
