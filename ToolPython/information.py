@@ -41,7 +41,7 @@ class information:
         self.checkusegem = 0
         self.skipcheckgem = 0
 
-        with open('owosettings.json', "r") as file:
+        with open('..\src\owosettings.json', "r") as file:
             data = json.load(file)
             self.token = data['token']
             self.channel = data['channel']
