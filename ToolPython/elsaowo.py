@@ -20,7 +20,7 @@ try:
     from twocaptcha import TwoCaptcha
     from inputimeout import inputimeout, TimeoutOccurred
     import discum
-    import chromedriver_binary
+
     from discum.utils.slash import SlashCommander
     from discord_webhook import DiscordWebhook
 except Exception as e:
@@ -32,7 +32,7 @@ except Exception as e:
     from twocaptcha import TwoCaptcha
     from inputimeout import inputimeout, TimeoutOccurred
     import discum
-    import chromedriver_binary
+
     from discum.utils.slash import SlashCommander
     from discord_webhook import DiscordWebhook
 
@@ -124,9 +124,7 @@ while True:
 
 @bot.gateway.command
 def on_ready(resp):
-
     if resp.event.ready_supplemental:  # ready_supplemental is sent after ready
-
         for i in range(len(bot.gateway.session.DMIDs)):
             if client.OwOID in bot.gateway.session.DMs[bot.gateway.session.DMIDs[i]]['recipients']:
                 client.dmsid = bot.gateway.session.DMIDs[i]
@@ -187,11 +185,11 @@ def on_ready(resp):
                 print(f"{color.purple}Min Bet of Owo Slot: {client.casino['os']['bet']}{color.reset}")
                 print(f"{color.purple}Rate Multiple of Owo Slot: {client.casino['os']['rate']}{color.reset}")
         print(f"{color.purple}----------------------------------{color.reset}")
-        print(f"{color.purple}Prefix Mode: '{client.prefix['enable']}'{color.reset}")
+        print(f"{color.purple}Prefix Mode: {client.prefix['enable']}{color.reset}")
         if client.prefix['enable']:
-            print(f"{color.purple}Selfbot Commands Prefix: '{client.prefix['key']}'{color.reset}")
+            print(f"{color.purple}Selfbot Commands Prefix: {client.prefix['key']}{color.reset}")
             print(f"{color.purple}Selfbot Commands Allowed Id: {client.prefix['allowed_id']}{color.reset}")
-        print(f"{color.purple}Webhook Mode: '{client.webhook['enable']}'{color.reset}")
+        print(f"{color.purple}Webhook Mode: {client.webhook['enable']}{color.reset}")
         print(f"{color.purple}Webhook Ping User Id: {client.webhook['pingid']}{color.reset}")
         print(f"{color.purple}----------------------------------{color.reset}")
         if not client.twocaptcha['enable']:
@@ -255,7 +253,7 @@ def CheckCaptcha(resp):
                     captcha_mes = bot.getMessages(client.dmsid)
                     try:
                         captcha_mes = json.loads(captcha_mes.text[1:-1]) if type(captcha_mes.json()) is list else {'author': {'id': '0'}}
-                    except:
+                    except Exception as e:
 
                         webhook.webhookping(client.username, client.userid)
                         threadcaptcha.start()
@@ -282,7 +280,7 @@ def CheckCaptcha(resp):
                     threadcaptcha.start()
                     print(f"{color.okcyan}[INFO] {color.reset}Captcha Solver API Is Having An Issue...")
                     return "captcha"
-        except:
+        except Exception as e:
 
             webhook.webhookping(client.username, client.userid)
             threadcaptcha.start()
@@ -321,7 +319,7 @@ def CheckCaptcha(resp):
             mes = bot.getMessages(client.dmsid)
             try:
                 mes = json.loads(mes.text[1:-1]) if type(mes.json()) is list else {'author': {'id': '0'}}
-            except:
+            except Exception as e:
 
                 print(f"{color.okcyan}[INFO] {color.reset}There's An Issue With Re Runner")
                 webhook.webhookPing(f"<@{client.webhook['pingid']}> There's An Issue With Re Runner . User: {client.username} <@{client.userid}>")
@@ -723,18 +721,18 @@ def CheckHuntBot(resp):
                 bot.typingAction(str(client.channel))
                 sleep(3)
                 bot.sendMessage(str(client.channel), f"owo hb 28000 {r['code']}")
-                print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} owo hb 28000 {r['code']}")
+                print(f"{at()}{color.reset}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} owo hb 28000 {r['code']}")
                 msgs = bot.getMessages(str(client.channel), num=10)
                 msgs = msgs.json()
                 for i in range(len(msgs)):
                     if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'I WILL BE BACK IN' in msgs[i]['content'] and not client.stopped:
                         api.report(Json={'captchaId': r['captchaId'], 'correct': 'True'})
-                        print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [INFO] {color.reset} Password huntbot is right")
+                        print(f"{at()}{color.reset}{color.okcyan} User: {client.username}{color.okgreen} [INFO] {color.reset} Password huntbot is right")
                     if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'WRONG PASSWORD' in msgs[i]['content'] and not client.stopped:
                         api.report(Json={'captchaId': r['captchaId'], 'correct': 'False'})
-                        print(f"{at()}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} Password huntbot is wrong")
+                        print(f"{at()}{color.reset}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} Password huntbot is wrong")
                     if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'have enough' in msgs[i]['content'] and not client.stopped:
-                        print(f"{at()}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} You dont have enough Cowocy")
+                        print(f"{at()}{color.reset}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} You dont have enough Cowocy")
 
     def SolvePasswordVip(image_url):
         if client.twocaptcha['enable']:

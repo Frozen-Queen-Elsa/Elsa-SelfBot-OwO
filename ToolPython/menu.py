@@ -59,10 +59,20 @@ class UI:
         print("         [13] Change Webhook Setting")
         print("         [14] Change Solve Captcha Setting")
         print("         [15] Change TwoCaptcha Setting")
-        #print("         [16] Change Huntbot Mode")
+        print("         [16] Change Huntbot Mode")
 
         print()
         print("╚═══════════════════════════════════════════╝")
+
+    @classmethod
+    def newstatus(cls):
+        print("╔═══════════════════════════════════════════╗")
+        print()
+        print("         [0] Exit And Save")
+        print("         [1] Change Status Setting")
+        print()
+        print("╚═══════════════════════════════════════════╝")
+
 
     @classmethod
     def info(cls):

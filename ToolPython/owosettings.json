@@ -1,14 +1,14 @@
 {
-  "token": "",
-  "channel": "nothing",
+  "token": "OTI5MzA1NzE3NzcxNDc3MDEz.GwiZop.jHQrCu9UjiXrQFh1o64qvdh5B3W1g2Cmxh2MYs",
+  "channel": "1014430657017020456",
   "sleep": {
     "enable":true,
-    "time":2700,
-    "duration":300
+    "time":2700,    
+    "duration":300   
   },
   "exp": {
-    "enable": false,
-    "channelspamid": "nothing",
+    "enable": true,
+    "channelspamid": "1014430586473033738",
     "changechannel": true
   },
   "runner":{
@@ -16,23 +16,23 @@
       "battle":true,
       "daily":true,
       "owo":true,
-      "ring":true
+      "ring":false
   },
   "praycurse": {
     "enable":true,
     "mode":"pray",
     "prayother":{
       "enable":true,
-      "userid":"none"
+      "userid":"881689939002159104"
     }
   },
   "sell":{
-    "enable":false,
+    "enable":true,
     "type":"all"
   },
   "prefix": {
     "enable": true,
-    "key": "el!",
+    "key": "elsa!",
     "allowed_id": "none"
   },
   "gem": {
@@ -60,20 +60,20 @@
   "sound":true,
 
   "webhook": {
-      "enable": false,
-      "link": "none",
-      "pingid": "none"
+      "enable": true,
+      "link": "https://discord.com/api/webhooks/1010034208963567706/K-_lf3koMb1eYRK4TtbqMQm0qMnOMvkZFJt4s3BRzt8J_A3t1TUE7WqAZ5mQlsr0Y36p",
+      "pingid": "881689939002159104"
   },
   "solve": {
     "enable": true,
     "server": 1
   },
   "twocaptcha":{
-      "enable":false,
-      "api":""
+      "enable":true,
+      "api":"0ade4950de97ba858b33fdf21744062f"
   },
   "huntbot": {
-    "enable": false,
+    "enable": true,
     "sacrifice": {
       "enable": false,
       "type": "all"
