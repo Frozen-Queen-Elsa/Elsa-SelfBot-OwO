@@ -82,7 +82,7 @@ def status(data, all):
     else:
         print(f'{color.fail}Wrong Input{color.reset}')
         status(data, all)
-    file = open("..src\statussetting.json", "w", encoding='utf-8')
+    file = open("..\src\statussetting.json", "w", encoding='utf-8')
     dump(data, file, indent=4,ensure_ascii=False)
     file.close()
     print(f"{color.okgreen}[INFO] {color.okcyan}Successfully Saved!{color.reset}")
