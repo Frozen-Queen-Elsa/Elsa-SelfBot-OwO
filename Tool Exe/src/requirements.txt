@@ -1,7 +1,8 @@
-git+https://github.com/ericz/Discord-S.C.U.M
+discum
 discord_webhook
 inputimeout
 playsound==1.2.2
 2captcha-python
 selenium
 undetected-chromedriver==2.1.1
+chromedriver_binary

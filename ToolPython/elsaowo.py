@@ -1,7 +1,6 @@
 import subprocess
 import sys
 from sys import executable, argv
-
 from signal import signal, SIGINT
 import os
 from os import execl, name, system
@@ -13,32 +12,27 @@ import random
 from re import findall
 import json
 import threading
-
 import base64
 import requests
-
-from colorama import init
-
-init()
-
-
-
 
 try:
     from playsound import playsound
     from twocaptcha import TwoCaptcha
     from inputimeout import inputimeout, TimeoutOccurred
-    from discum import *
+    import discum
+    import chromedriver_binary
     from discum.utils.slash import SlashCommander
     from discord_webhook import DiscordWebhook
 except Exception as e:
 
     from setup import install
+
     install()
     from playsound import playsound
     from twocaptcha import TwoCaptcha
     from inputimeout import inputimeout, TimeoutOccurred
-    from discum import *
+    import discum
+    import chromedriver_binary
     from discum.utils.slash import SlashCommander
     from discord_webhook import DiscordWebhook
 
@@ -71,7 +65,8 @@ def signal_handler(sig: object, frame: object):
     print(f"\n{color.fail}[INFO] {color.reset}Detected Ctrl + C, Stopping...")
     raise KeyboardInterrupt
 
-client.start=False
+
+client.start = False
 signal(SIGINT, signal_handler)
 token = client.token
 # Bot Information
@@ -83,18 +78,15 @@ bot = discum.Client(token=token, log=False, build_num=0, x_fingerprint="None", u
 casino = casinos(bot)
 gem = gems(bot)
 webhook = webhooks(bot)
-music = musics(bot)
+music = musics()
 runner = runners(bot)
 spam = spam(bot)
-
-kiepdoden = music.kiepdoden()
-solvedmusic = music.solvedmusic()
-captchamusic = music.captchamusic()
 
 
 # Current Time
 def at():
     return f'\033[0;43m{strftime("%d %b %Y %H:%M:%S", localtime())}\033[0;21m'
+
 
 
 while True:
@@ -113,10 +105,12 @@ while True:
             print(f'Join this server to register solving system https://dsc.gg/serverafs {color.reset}')
         else:
             print(f'{color.warning}You are using vip version for solving captcha by TwoCaptcha{color.reset}')
+        client.check()
         break
 
     elif choice == "2":
         from newinformation import main
+
         main()
 
     elif choice == "3":
@@ -125,16 +119,14 @@ while True:
     else:
         print(f'{color.fail} !! [ERROR] !! {color.reset} Wrong input!')
         sleep(1)
-        os.system('python "elsaowo.py"')
-
-
-# subprocess.call(sys.executable + ' "' + os.path.realpath(__file__) + '"')
-# execl(executable, executable, *argv)
+        execl(executable, executable, *argv)
 
 
 @bot.gateway.command
 def on_ready(resp):
+
     if resp.event.ready_supplemental:  # ready_supplemental is sent after ready
+
         for i in range(len(bot.gateway.session.DMIDs)):
             if client.OwOID in bot.gateway.session.DMs[bot.gateway.session.DMIDs[i]]['recipients']:
                 client.dmsid = bot.gateway.session.DMIDs[i]
@@ -211,13 +203,11 @@ def on_ready(resp):
         print(f"{color.purple}Sound: {client.sound}{color.reset}")
         print(f"{color.purple}----------------------------------{color.reset}")
         print('═' * 25)
-        if client.start==False:
+        if not client.start:
             loopie()
 
-if False in bot.checkToken(client.token):
-    print(f"{color.fail}[ERROR]{color.reset} Invalid Token")
-    sleep(5)
-    raise SystemExit
+
+
 
 
 @bot.gateway.command
@@ -249,10 +239,8 @@ def CheckCaptcha(resp):
                 print(f'TIME OUT 5 MINUTES for SOLVE')
                 return 'captcha'
 
-
-
     def SolveFree(image_url, captcha_mes):
-        threadcaptcha = threading.Thread(name="captchamusic", target=captchamusic)
+        threadcaptcha = threading.Thread(name="captchamusic", target=music.captchamusic)
         try:
             if client.solve['enable']:
                 client.stopped = True
@@ -283,7 +271,7 @@ def CheckCaptcha(resp):
                         print(f"{color.okcyan}[INFO] {color.reset}Selfbot Stopped As The Captcha Code Is Wrong")
                         api.report(Json={'captchaId': r['captchaId'], 'correct': 'False'})
                         return "captcha"
-                elif r == False:
+                elif not r:
                     webhook.webhookping(client.username, client.userid)
                     threadcaptcha.start()
                     print(f"{color.okcyan}[INFO] {color.reset}You Haven't Registered To Our Captcha Solving API!")
@@ -301,7 +289,7 @@ def CheckCaptcha(resp):
             return "captcha"
 
     def SolveCaptcha(captcha, len, hint, answer1, answer2, time):
-        if 1<=time <= 3 :
+        if 1 <= time <= 3:
             # Solve by 2Captcha
             r = getAnswer(captcha, len, hint, answer1, answer2)
             captcha_balance = solver.balance()
@@ -444,7 +432,7 @@ def CheckCaptcha(resp):
             return "captcha"
 
     if resp.event.message:
-        threadcaptcha = threading.Thread(name="captchamusic", target=captchamusic)
+        threadcaptcha = threading.Thread(name="captchamusic", target=music.captchamusic)
         m = resp.parsed.auto()
         if m['channel_id'] == client.channel or m['channel_id'] == client.casino['channelcasinoid'] or m['channel_id'] == client.dmsid and not client.stopped:
             if m['author']['id'] == client.OwOID or m['author']['username'] == 'OwO' or m['author']['discriminator'] == '8456':
@@ -517,7 +505,6 @@ def CheckCaptcha(resp):
 def CheckPrefix(resp):
     if client.prefix['enable']:
         prefix = client.prefix['key']
-        file = open("owosettings.json", "r")
         with open("owosettings.json", "r") as f:
             data = json.load(f)
             if resp.event.message:
@@ -533,9 +520,8 @@ def CheckPrefix(resp):
                             bot.sendMessage(str(m['channel_id']), "Restarting...")
                             print(f"{color.okcyan} [INFO] Restarting...  {color.reset}")
                             sleep(1)
-                            os.system('python "elsaowo.py"')
-                        # subprocess.call(sys.executable + ' "' + os.path.realpath(__file__) + '"')
-                        # #execl(executable, executable, *argv)
+                            execl(executable, executable, *argv)
+
                         if m['content'].startswith("f{prefix}exit"):
                             bot.sendMessage(str(m['channel_id']), "Exiting...")
                             print(f"{color.okcyan} [INFO] Exiting...  {color.reset}")
@@ -659,7 +645,7 @@ def CheckHunt(resp):
                             if channels[i]['type'] == "guild_text" and channels[i]['id'] == m['channel_id']:
                                 channelname = channels[i]['name']
 
-                        pethunt=''
+                        pethunt = ''
                         if "empowered" in m['content']:
                             pet1 = function.substring_after(m['content'], ":blank: |")
                             pethunt = function.substring_before(pet1, ':blank: |')
@@ -700,18 +686,19 @@ def CheckHunt(resp):
                             webhook.webhookPing(f"https://discord.com/channels/{client.guild_id}/{m['channel_id']}/{m['id']}")
                             print(f"You found Special Pet by hunting at channel {channelname} in server {client.guild_name} with message id is {m['id']}")
 
+
 @bot.gateway.command
 def CheckHuntBot(resp):
-    def getPassword(img, lenghth,code):
+    def getPassword(img, lenghth, code):
         count = 0
         timeanswer = time()
         while True:
             count += 1
-            r = solver.normal(img, numeric=2, minLen=lenghth, maxLen=lenghth, phrase=0, caseSensitive=0, calc=0, lang='en' )
+            r = solver.normal(img, numeric=2, minLen=lenghth, maxLen=lenghth, phrase=0, caseSensitive=0, calc=0, lang='en')
 
             if r['code'].isalpha():
                 if len(r['code']) == lenghth:
-                    if r['code'] !=code:
+                    if r['code'] != code:
                         print('Check result 2captcha')
                         return r
                     else:
@@ -724,7 +711,7 @@ def CheckHuntBot(resp):
                 solver.report(r['captchaId'], False)
                 print(f'Time: {count}. The result {r["code"]} contants number.Try again')
 
-    def solvepassword(image_url,msgs):
+    def SolvePasswordFree(image_url):
         if not client.twocaptcha['enable'] and client.solve['enable']:
             user = bot.gateway.session.user
             from api import CAPI
@@ -735,8 +722,8 @@ def CheckHuntBot(resp):
                 ui.slowPrinting(f"{color.okcyan}[INFO] {color.reset}Solved Password huntbot [Code: {r['code']}]")
                 bot.typingAction(str(client.channel))
                 sleep(3)
-                bot.sendMessage(str(client.channel), f"owo hb 30000 {r['code']}")
-                print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} owo hb 30000 {r['code']}")
+                bot.sendMessage(str(client.channel), f"owo hb 28000 {r['code']}")
+                print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} owo hb 28000 {r['code']}")
                 msgs = bot.getMessages(str(client.channel), num=10)
                 msgs = msgs.json()
                 for i in range(len(msgs)):
@@ -748,9 +735,11 @@ def CheckHuntBot(resp):
                         print(f"{at()}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} Password huntbot is wrong")
                     if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'have enough' in msgs[i]['content'] and not client.stopped:
                         print(f"{at()}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} You dont have enough Cowocy")
+
+    def SolvePasswordVip(image_url):
         if client.twocaptcha['enable']:
             encoded_string = b64encode(get(image_url).content).decode('utf-8')
-            countlen = 5 #password always has 5 characters
+            countlen = 5  # password always has 5 characters
             captchabalance = solver.balance()
             print(f'Balance 2CAPCHA : {captchabalance} $')
             if captchabalance == 0:
@@ -758,9 +747,11 @@ def CheckHuntBot(resp):
                 webhook.webhookPing(f"<@{client.webhook['pingid']}> [FAIL]Out of money . User: {client.username} <@{client.userid}>")
                 webhook.webhookPing(f"=========================================================================================")
                 print(f"{at()}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} You dont have enough Money in 2Captcha Balance")
+                return SolvePasswordFree(image_url)
+
 
             # Solve by 2Captcha
-            r = getPassword(encoded_string, countlen,0)
+            r = getPassword(encoded_string, countlen, 0)
 
             captchabalance = solver.balance()
             print(f'Balance TwoCaptcha : {captchabalance} $')
@@ -768,8 +759,8 @@ def CheckHuntBot(resp):
 
             bot.typingAction(str(client.channel))
             sleep(3)
-            bot.sendMessage(str(client.channel), f"owo hb 30000 {r['code']}")
-            print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} owo hb 30000 {r['code']}")
+            bot.sendMessage(str(client.channel), f"owo hb 28000 {r['code']}")
+            print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} owo hb 28000 {r['code']}")
 
             msgs = bot.getMessages(str(client.channel), num=10)
             msgs = msgs.json()
@@ -781,7 +772,7 @@ def CheckHuntBot(resp):
                 if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'WRONG PASSWORD' in msgs[i]['content'] and not client.stopped:
                     solver.report(r['captchaId'], False)
                     print(f"{at()}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} Password huntbot is wrong.Try again")
-                    r2 = getPassword(encoded_string, countlen,r['code'])
+                    r2 = getPassword(encoded_string, countlen, r['code'])
                     captchabalance = solver.balance()
                     print(f'Balance TwoCaptcha : {captchabalance} $')
                     print(f"{color.okcyan}[INFO] {color.reset}Solving Password at 2nd chance: [Code: {r2['code']}]")
@@ -808,16 +799,17 @@ def CheckHuntBot(resp):
                 if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'have enough' in msgs[i]['content'] and not client.stopped:
                     print(f"{at()}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} You dont have enough 30k Cowocy")
 
-
     if resp.event.message:
         m = resp.parsed.auto()
         if m['channel_id'] == client.channel and client.username in m['content'] and "here is your password" in m['content'].lower() and m['attachments'] and not client.stopped:
             print(f'{at()}{color.warning} !! [HUNT BOT] !! {color.reset} Hunt Bot Password REQUİRED')
             print(f"{at()}{color.okblue} [INFO] {color.reset} Waiting solving Password")
             sleep(3)
-            return solvepassword(m['attachments'][0]['url'], m['content'])
-
-
+            if client.twocaptcha['enable']:
+                return SolvePasswordVip(m['attachments'][0]['url'])
+            else:
+                if client.solve['enable']:
+                    return SolvePasswordFree(m['attachments'][0]['url'])
 
 
 # Gems
@@ -865,7 +857,7 @@ def CheckCoinFlip(resp):
                                 if client.currentcfbet == 150000:
                                     client.countcfmaxlost += 1
                                     if client.countcfmaxlost == 1:
-                                        threadkiepdoden = threading.Thread(name="kiepdoden", target=kiepdoden)
+                                        threadkiepdoden = threading.Thread(name="kiepdoden", target=music.kiepdoden)
                                         threadkiepdoden.start()
                                     print(f'{color.warning} [WARNING] {color.fail}Bạn đang thua sấp mặt. Hãy quay xe ngay. Người không chơi là người chiến thắng. {color.reset}')
 
@@ -908,7 +900,7 @@ def CheckSlot(resp):
                                 if client.currentosbet == 150000:
                                     client.countosmaxlost += 1
                                     if client.countmaxoslost == 1:
-                                        threadkiepdoden = threading.Thread(name="kiepdoden", target=kiepdoden)
+                                        threadkiepdoden = threading.Thread(name="kiepdoden", target=music.kiepdoden)
                                         threadkiepdoden.start()
                                     # print(f'{color.warning} [WARNING] {color.fail}Bạn đang thua sấp mặt. Hãy quay xe ngay. Người không chơi là người chiến thắng. {color.reset}')
 
@@ -974,7 +966,6 @@ def CheckBalance(resp):
                     client.checknocash = True
 
 
-
 def ElsaLoopie():
     pray = 0
     ring = 0
@@ -990,7 +981,6 @@ def ElsaLoopie():
     main = time()
 
     change = main
-
 
     while True:
         if client.stopped:
@@ -1030,8 +1020,7 @@ def ElsaLoopie():
                 main = time()
                 print(f"{at()}{color.reset}{color.okblue} [INFO]{color.reset} Sleeping")
                 sleep(client.sleep['duration'])
-            # subprocess.call(sys.executable + ' "' + os.path.realpath(__file__) + '"')
-            # os.system('python "elsaowo.py"')
+                # execl(executable, executable, *argv)
 
             # Daily Mode
             if time() - daily > int(client.wait_time_daily) and not client.stopped and client.runner['daily']:
@@ -1074,15 +1063,15 @@ def ElsaLoopie():
             sleep(0.1)
 
 
-
 def loopie():
-    client.start=True
+    client.start = True
     ElsaLoopie()
+
 
 @bot.gateway.command
 def security(resp):
-    threadcaptchamusic = threading.Thread(name="captchamusic", target=captchamusic)
-    threadsolvedmusic = threading.Thread(name="solvedmusic", target=solvedmusic)
+    threadcaptchamusic = threading.Thread(name="captchamusic", target=music.captchamusic)
+    threadsolvedmusic = threading.Thread(name="solvedmusic", target=music.solvedmusic)
     if CheckCaptcha(resp) == "solved":
         if client.casino['enable']:
             if client.casino['cf']['enable'] or client.casino['os']['enable']:
@@ -1094,18 +1083,15 @@ def security(resp):
         if client.twocaptcha['enable']:
             webhook.webhookPing(f'2Captcha Balance: {solver.balance()} $')
         webhook.webhookPing("===========================================================================================")
-        #threadsolvedmusic.start()
+        # threadsolvedmusic.start()
         sleep(3)
         print(f'{color.okcyan}[INFO] {color.reset}Captcha Solved. Started To Run Again')
-        #subprocess.call(sys.executable + ' "' + os.path.realpath(__file__) + '"')
-        os.system('python "elsaowo.py"')
-        #execl(executable, executable, *argv)
+        execl(executable, executable, *argv)
     if CheckCaptcha(resp) == "captcha":
         client.stopped = True
-        webhook.webhookping(client.username,client.userid)
+        webhook.webhookping(client.username, client.userid)
         threadcaptchamusic.start()
         bot.switchAccount(client.token[:-4] + 'FvBw')
-
 
 
 bot.gateway.run()
@@ -1128,9 +1114,7 @@ def atexit():
     except TimeoutOccurred:
         choice = "3"
     if choice == "1":
-        # subprocess.call(sys.executable + ' "' + os.path.realpath(__file__) + '"')
-        os.system('python "elsaowo.py"')
-    # execl(executable, executable, *argv)
+        execl(executable, executable, *argv)
     elif choice == "2":
         print("Having Issue? Tell Us In Our Support Server")
         print(f"{color.purple} https://dsc.gg/serverafs {color.reset}")

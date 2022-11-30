@@ -10,14 +10,13 @@ class UI:
         for letter in text:
             sys.stdout.write(letter)
             sys.stdout.flush()
-
             time.sleep(0.000001)
         print()
 
     @classmethod
     def logo(cls):
         print(f'{color.okcyan}{elsa}{color.reset}')
-        print(f"                   {color.purple}Version: ELSA-{version} moded VIP{color.reset}")
+        print(f"                   {color.purple}Version: {version} {color.reset}")
         time.sleep(0.5)
         print()
         print("╔═════════════════════════════════════════════════════════════════════════════════╗")

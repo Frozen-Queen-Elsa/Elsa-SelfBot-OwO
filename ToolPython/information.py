@@ -23,7 +23,7 @@ class information:
         self.guild_name=""
         self.checknogem = False
         self.stopped = False
-        self.version = int(''.join(map(str, Version)))
+        self.version = str(''.join(map(str, Version)))
         self.wait_time_daily = 60
         self.wait_time_huntbot = 60
         self.channel2 = []
@@ -109,23 +109,25 @@ class information:
 
 
     def Version(self):
-        response = get("https://raw.githubusercontent.com/ahihiyou20/discord-selfbot-owo-bot/development/source/src/version.py")
+        response = get("https://raw.githubusercontent.com/Frozen-Queen-Elsa/Elsa-SelfBot-OwO/master/ToolPython/version.py")
         version = response.text
         version = findall(r'\b\d+\b', version)
-        return int(''.join(version))
+        return str(''.join(version))
 
     def check(self):
         version = self.Version()
         if self.token and self.channel == 'nothing':
-            print(f"{color.fail} !!! [ERROR] !!! {color.reset} Please Enter Information To Continue")
+            print(f"{color.fail} !!! [ERROR] !!! {color.reset} Please Enter Information To Continue\n")
             sleep(2)
             from newinformation import main
             main()
         else:
             response = get('https://discord.com/api/v9/users/@me', headers={"Authorization": self.token})
             if response.status_code != 200:
-                print(f"{color.fail} !!! [ERROR] !!! {color.reset} Invalid Token")
-                sleep(2)
+                print(f"{color.fail} !!! [ERROR] !!! {color.reset} Invalid Token\n")
+                sleep(1)
+                from newinformation import main
+                main()
 
 a = information()
-a.check()
+

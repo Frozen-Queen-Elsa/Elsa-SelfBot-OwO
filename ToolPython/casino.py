@@ -1,9 +1,8 @@
-from information import information
-
-from time import sleep, strftime, localtime
-from color import color
 import random
-from re import findall, sub
+from time import sleep, strftime, localtime
+
+from color import color
+from information import information
 
 client = information()
 
