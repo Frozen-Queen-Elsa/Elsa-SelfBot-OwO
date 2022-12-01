@@ -52,10 +52,10 @@ class runners:
         if client.praycurse['prayother']['enable']:
             self.bot.sendMessage(str(client.channel), f"owo {client.praycurse['mode'].lower()} <@{client.praycurse['prayother']['userid']}>")
             print(
-                f"{self.at()}{color.reset}{color.okcyan} User: {username}{color.okgreen} [SENT] {color.reset} owo curse ID {color.yellow}{client.praycurse['prayother']['userid']} {color.reset}")
+                f"{self.at()}{color.reset}{color.okcyan} User: {username}{color.okgreen} [SENT] {color.reset} owo {client.praycurse['mode'].lower()} ID {color.yellow}{client.praycurse['prayother']['userid']} {color.reset}")
         else:
             self.bot.sendMessage(str(client.channel), f"owo {client.praycurse['mode'].lower()} ")
-            print(f"{self.at()}{color.reset}{color.okcyan} User: {username}{color.okgreen} [SENT] {color.reset} owo curse ")
+            print(f"{self.at()}{color.reset}{color.okcyan} User: {username}{color.okgreen} [SENT] {color.reset} owo {client.praycurse['mode'].lower()} ")
             client.totalcmd += 1
             sleep(random.randint(1, 3))
 
