@@ -1,13 +1,13 @@
 {
     "status": {
-        "number": 2,
+        "number": 10,
         "status_1": {
-            "stt": "Trứng rán cần mỡ, Bắp cần bơ",
-            "time": 3
+            "stt": "",
+            "time": 5
         },
         "status_2": {
-            "stt": "Yêu không cần cớ, Cần cậu cơ",
-            "time": 3
+            "stt": "",
+            "time": 5
         },
         "status_3": {
             "stt": "",
@@ -19,27 +19,27 @@
         },
         "status_5": {
             "stt": "",
-            "time": ""
+            "time": 5
         },
         "status_6": {
             "stt": "",
-            "time": ""
+            "time": 5
         },
         "status_7": {
             "stt": "",
-            "time": ""
+            "time": 5
         },
         "status_8": {
             "stt": "",
-            "time": ""
+            "time": 5
         },
         "status_9": {
             "stt": "",
-            "time": ""
+            "time": 5
         },
         "status_10": {
             "stt": "",
-            "time": ""
+            "time": 5
         }
     }
 }
