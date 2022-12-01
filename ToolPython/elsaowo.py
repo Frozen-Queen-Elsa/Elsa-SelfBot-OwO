@@ -301,8 +301,10 @@ def CheckCaptcha(resp):
         if client.twocaptcha['enable'] and 1 <= time <= 3:
             client.stopped = True
             encoded_string = b64encode(get(image_url).content).decode('utf-8')
-            count_len = int(captcha_mes[captcha_mes.index("letter word") - 2])
-
+            try:
+                count_len = int(captcha_mes[captcha_mes.index("letter word") - 2])
+            except:
+                count_len = int(captcha_mes[captcha_mes.find("letter word") - 2])
             # Check balance of 2Captcha
             captcha_balance = solver.balance()
             if captcha_balance == 0:
@@ -482,7 +484,7 @@ def CheckCaptcha(resp):
                                 client.stopped = True
                                 return "captcha"
                 if client.username in m['content'] and '⚠' in m['content'].lower() and not client.stopped:
-                    if client.solve.lower() != "no" and m['attachments'] and not client.stopped:
+                    if  m['attachments'] and not client.stopped:
                         client.stopped = True
                         print(f'{at()}{color.reset}{color.warning} !! [CAPTCHA] !! {color.reset} ACTION REQUİRED')
                         if client.twocaptcha['enable']:
