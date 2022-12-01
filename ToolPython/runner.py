@@ -103,9 +103,12 @@ class runners:
         length = len(msgs)
         i = 0
         while i < length:
-            if msgs[i]['author']['id'] == client.OwOID and msgs[i]['content'] != "" and "I WILL BE BACK IN" in msgs[i]['content']:
-                huntbot_string = msgs[i]['content']
-                i = length
+            if msgs[i]['author']['id'] == client.OwOID and msgs[i]['content'] != "":
+                if "I WILL BE BACK IN" in msgs[i]['content'] or "I AM BACK WITH" in msgs[i]['content']:
+                    huntbot_string = msgs[i]['content']
+                    i = length
+                else:
+                    i += 1
             else:
                 i += 1
 
