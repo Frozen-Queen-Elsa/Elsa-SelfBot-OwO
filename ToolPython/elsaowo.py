@@ -88,7 +88,6 @@ def at():
     return f'\033[0;43m{strftime("%d %b %Y %H:%M:%S", localtime())}\033[0;21m'
 
 
-
 while True:
     system('cls' if name == 'nt' else 'clear')
     ui.logo()
@@ -205,7 +204,6 @@ def on_ready(resp):
             loopie()
 
 
-
 @bot.gateway.command
 def security(resp):
     threadcaptchamusic = threading.Thread(name="captchamusic", target=music.captchamusic)
@@ -230,7 +228,6 @@ def security(resp):
         webhook.webhookping(client.username, client.userid)
         threadcaptchamusic.start()
         bot.switchAccount(client.token[:-4] + 'FvBw')
-
 
 
 @bot.gateway.command
@@ -480,6 +477,7 @@ def CheckCaptcha(resp):
                     if client.username in m['content'] and msgs[0]['author']['id'] == client.OwOID and '⚠' in msgs[0]['content'] and msgs[0]['attachments']:
                         print(f'{at()}{color.reset}{color.warning} !! [CAPTCHA] !! {color.reset} ACTION REQUİRED')
                         if client.twocaptcha['enable']:
+                            client.stopped = True
                             return SolveVIP(msgs[0]['attachments'][0]['url'], msgs[0]['content'], "", 0, 0, 1)
                         else:
                             if client.solve['enable'] and not client.stopped:
@@ -501,10 +499,12 @@ def CheckCaptcha(resp):
                         if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'solving the captcha' in msgs[i]['content'].lower() and not client.stopped:
                             print(f'{at()}{color.reset}{color.warning} !! [CAPTCHA] !! {color.reset} ACTION REQUİRED')
                             if client.twocaptcha['enable']:
+
                                 return SolveVIP(msgs[i]['attachments'][0]['url'], msgs[0]['content'], "", 0, 0, 1)
                             else:
                                 if client.solve['enable'] and not client.stopped:
                                     client.stopped = True
+
                                     return SolveFree(msgs[i]['attachments'][0]['url'], msgs[0]['content'])
                                 else:
                                     client.stopped = True
@@ -514,7 +514,7 @@ def CheckCaptcha(resp):
                                 client.stopped = True
                                 return "captcha"
                 if client.username in m['content'] and '⚠' in m['content'].lower() and not client.stopped:
-                    if  m['attachments'] and not client.stopped:
+                    if m['attachments'] and not client.stopped:
                         client.stopped = True
                         print(f'{at()}{color.reset}{color.warning} !! [CAPTCHA] !! {color.reset} ACTION REQUİRED')
                         if client.twocaptcha['enable']:
@@ -795,7 +795,6 @@ def CheckHuntBot(resp):
                 print(f"{at()}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} You dont have enough Money in 2Captcha Balance")
                 return SolvePasswordFree(image_url)
 
-
             # Solve by 2Captcha
             r = getPassword(encoded_string, countlen, 0)
 
@@ -813,10 +812,9 @@ def CheckHuntBot(resp):
             for i in range(len(msgs)):
                 if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'I WILL BE BACK IN' in msgs[i]['content'] and not client.stopped:
 
-
                     solver.report(r['captchaId'], True)
                     print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [INFO] {color.reset} Password huntbot is right")
-                    huntbot_string=msgs[i]['content']
+                    huntbot_string = msgs[i]['content']
                     huntbot_string = function.substring_after(huntbot_string, "I WILL BE BACK IN ")
                     huntbot_string = function.substring_before(huntbot_string, "DONE")
                     huntbot_string = function.substring_before(huntbot_string, ":blank:")
@@ -1046,7 +1044,6 @@ def CheckBalance(resp):
                     client.checknocash = True
 
 
-
 def ElsaLoopie():
     pray = 0
     ring = 0
@@ -1148,7 +1145,6 @@ def ElsaLoopie():
 def loopie():
     client.start = True
     ElsaLoopie()
-
 
 
 bot.gateway.run()
