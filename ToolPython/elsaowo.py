@@ -730,6 +730,7 @@ def CheckHuntBot(resp):
                     if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'I WILL BE BACK IN' in msgs[i]['content'] and not client.stopped:
                         api.report(Json={'captchaId': r['captchaId'], 'correct': 'True'})
                         print(f"{at()}{color.reset}{color.okcyan} User: {client.username}{color.okgreen} [INFO] {color.reset} Password huntbot is right")
+                        huntbot_string = msgs[i]['content']
                         huntbot_string = function.substring_after(huntbot_string, "I WILL BE BACK IN ")
                         huntbot_string = function.substring_before(huntbot_string, "DONE")
                         huntbot_string = function.substring_before(huntbot_string, ":blank:")
@@ -785,6 +786,7 @@ def CheckHuntBot(resp):
 
                     solver.report(r['captchaId'], True)
                     print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [INFO] {color.reset} Password huntbot is right")
+                    huntbot_string=msgs[i]['content']
                     huntbot_string = function.substring_after(huntbot_string, "I WILL BE BACK IN ")
                     huntbot_string = function.substring_before(huntbot_string, "DONE")
                     huntbot_string = function.substring_before(huntbot_string, ":blank:")
@@ -820,6 +822,7 @@ def CheckHuntBot(resp):
                         if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'I WILL BE BACK IN' in msgs[i]['content'] and not client.stopped:
                             solver.report(r['captchaId'], True)
                             print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [INFO] {color.reset} Password huntbot is right")
+                            huntbot_string = msgs[i]['content']
                             huntbot_string = function.substring_after(huntbot_string, "I WILL BE BACK IN ")
                             huntbot_string = function.substring_before(huntbot_string, "DONE")
                             huntbot_string = function.substring_before(huntbot_string, ":blank:")

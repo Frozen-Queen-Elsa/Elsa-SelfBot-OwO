@@ -18,7 +18,7 @@ This is the ELSA SELF-BOT for OwO Bot on Discord.
 
 * ### [Download Lastest Modded Simple Version Release](https://github.com/FrozenQueenElsa0903/Elsa-Owo-Selfbot-ver-Simple/releases)
 
-* ### [Download Lastest Modded Full VersionRelease](https://github.com/FrozenQueenElsa0903/Elsa-Owo-Selfbot-ver-Full/releases)
+* ### [Download Lastest Modded Full Version Release](https://github.com/FrozenQueenElsa0903/Elsa-Owo-Selfbot-ver-Full/releases)
 * ### [Download Lastest Origin Release](https://github.com/ahihiyou20/discord-selfbot-owo-bot/release)
 
 
