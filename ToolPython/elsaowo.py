@@ -281,7 +281,6 @@ def CheckCaptcha(resp):
                     print(f"{color.okcyan}[INFO] {color.reset}Captcha Solver API Is Having An Issue...")
                     return "captcha"
         except Exception as e:
-
             webhook.webhookping(client.username, client.userid)
             threadcaptcha.start()
             return "captcha"
@@ -329,9 +328,11 @@ def CheckCaptcha(resp):
                 sleep(2)
                 return "captcha"
             if mes['author']['id'] == client.OwOID and "verified" in mes['content']:
+                print(f"{color.purple}Right Captcha{color.reset}")
                 solver.report(answer['captchaId'], True)
                 return "solved"
             if mes['author']['id'] == client.OwOID and "Wrong verification code" in mes['content']:
+                print(f"{color.purple}Wrong Captcha{color.reset}")
                 webhook.webhookping(client.username, client.userid)
                 webhook.webhookPing(f"<@{client.webhook['pingid']}> [FAIL]I have solved the captcha fail in the 1st chance. Wait me at the 2nd chance. Sorry . User: {client.username} <@{client.userid}>")
                 solver.report(answer['captchaId'], False)  # Báo kết quả sai
@@ -776,7 +777,7 @@ def CheckHuntBot(resp):
             bot.typingAction(str(client.channel))
             sleep(3)
             bot.sendMessage(str(client.channel), f"owo hb 28000 {r['code']}")
-            print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} owo hb 28000 {r['code']}")
+            print(f"{at()}{color.reset}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} owo hb 28000 {r['code']}")
 
             msgs = bot.getMessages(str(client.channel), num=10)
             msgs = msgs.json()
