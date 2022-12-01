@@ -26,7 +26,7 @@ This is the ELSA SELF-BOT for OwO Bot on Discord.
 
 ==========================================================================
 
-### Method 1: File .exe
+### Method 1: File .bat
 
 **Step 1: Install Selenium and Chrome Driver**
 
@@ -42,17 +42,18 @@ This is the ELSA SELF-BOT for OwO Bot on Discord.
 
 * Install Python. *When you set up python, remember to check **Add to the PATH**, don't click next next without read*
 
-**Step 3: Setup Library for Bot**
+**Step 3: Run file**
 
-* In folder named "ToolExe" run **1_Setup.exe**
+* Run these files step by step 
 
-**Step 4: Setting Configuration for Bot**
+- - **1_setup.bat**  
 
-* In folder named "ToolExe" run **2_Setting.exe**
+- - **2_setting.bat** 
 
-**Step 5: Run Elsa Self-Bot**
+- - **3_Elsa_SelfBot_OwO.bat**
 
-* In folder named "ToolExe" run **3_Elsa_SelfBot_OwO.exe**
+* Notes:
+- - There are some plus self-bots for you to discover
 
 ==========================================================================
 ### Method 2: File .py
