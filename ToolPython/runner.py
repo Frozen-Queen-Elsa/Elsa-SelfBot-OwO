@@ -1,3 +1,4 @@
+from ToolPython.elsaowo import function
 from information import information
 from time import sleep, strftime, localtime
 from color import color
@@ -108,10 +109,19 @@ class runners:
             else:
                 i += 1
 
+
         if "I WILL BE BACK IN" in huntbot_string:
-            huntbot_string = findall('[0-9]+', huntbot_string)
-            wait_time_huntbot = str(int(huntbot_string[0]) * 3600 + int(huntbot_string[1]) * 60)
-            print(f"{self.at()}{color.reset}{color.okblue} [INFO] {color.reset} Next Huntbot: {huntbot_string[0]}H {huntbot_string[1]}M")
+            huntbot_string = function.substring_after(huntbot_string, "I WILL BE BACK IN ")
+            huntbot_string = function.substring_before(huntbot_string, "DONE")
+            huntbot_string = function.substring_before(huntbot_string, ":blank:")
+            hour_huntbot_string = function.substring_before(huntbot_string, "H")
+            minute_huntbot_string = function.substring_before(function.substring_after(huntbot_string, "H"), "M")
+            minute_huntbot_string = minute_huntbot_string.lstrip()
+            wait_hour = int(hour_huntbot_string)
+            wait_minute = int(minute_huntbot_string)
+            wait_time_huntbot = wait_hour * 3600 + wait_minute * 60
+
+            print(f"{self.at()}{color.okblue} [INFO] {color.reset} Next Huntbot: {wait_hour}H {wait_minute}M")
             return wait_time_huntbot
         elif "I AM BACK WITH" in huntbot_string:
             print(f"{self.at()}{color.reset}{color.okblue} [INFO] {color.reset} Claimed Huntbot")
