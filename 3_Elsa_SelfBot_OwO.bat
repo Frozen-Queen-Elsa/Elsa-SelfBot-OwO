@@ -1,3 +1,3 @@
-python .\ToolPython\newinformation.py
+python .\ToolPython\elsaowo.py
 
 timeout -1
