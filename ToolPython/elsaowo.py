@@ -1030,6 +1030,7 @@ def ElsaLoopie():
                 daily = time()
 
             # Hunt_bot Mode
+
             if time() - hunt_bot > int(client.wait_time_huntbot) and not client.stopped and client.huntbot['enable']:
                 client.wait_time_huntbot = runner.huntbot(client.username)
                 hunt_bot = time()

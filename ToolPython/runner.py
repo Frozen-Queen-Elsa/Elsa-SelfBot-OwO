@@ -111,7 +111,7 @@ class runners:
         if "I WILL BE BACK IN" in huntbot_string:
             huntbot_string = findall('[0-9]+', huntbot_string)
             wait_time_huntbot = str(int(huntbot_string[0]) * 3600 + int(huntbot_string[1]) * 60)
-            print(f"{self.at()}{color.reset}{color.okblue} [INFO] {color.reset} Next Huntbot: {wait_time_huntbot}s")
+            print(f"{self.at()}{color.reset}{color.okblue} [INFO] {color.reset} Next Huntbot: {huntbot_string[0]}H {huntbot_string[1]}M")
             return wait_time_huntbot
         elif "I AM BACK WITH" in huntbot_string:
             print(f"{self.at()}{color.reset}{color.okblue} [INFO] {color.reset} Claimed Huntbot")
