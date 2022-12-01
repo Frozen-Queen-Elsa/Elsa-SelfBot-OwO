@@ -730,6 +730,16 @@ def CheckHuntBot(resp):
                     if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'I WILL BE BACK IN' in msgs[i]['content'] and not client.stopped:
                         api.report(Json={'captchaId': r['captchaId'], 'correct': 'True'})
                         print(f"{at()}{color.reset}{color.okcyan} User: {client.username}{color.okgreen} [INFO] {color.reset} Password huntbot is right")
+                        huntbot_string = function.substring_after(huntbot_string, "I WILL BE BACK IN ")
+                        huntbot_string = function.substring_before(huntbot_string, "DONE")
+                        huntbot_string = function.substring_before(huntbot_string, ":blank:")
+                        hour_huntbot_string = function.substring_before(huntbot_string, "H")
+                        minute_huntbot_string = function.substring_before(function.substring_after(huntbot_string, "H"), "M")
+                        minute_huntbot_string = minute_huntbot_string.lstrip()
+                        wait_hour = int(hour_huntbot_string)
+                        wait_minute = int(minute_huntbot_string)
+                        client.wait_time_huntbot = wait_hour * 3600 + wait_minute * 60
+                        client.print(f"{at()}{color.okblue} [INFO] {color.reset} Next Huntbot: {wait_hour}H {wait_minute}M")
                     if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'WRONG PASSWORD' in msgs[i]['content'] and not client.stopped:
                         api.report(Json={'captchaId': r['captchaId'], 'correct': 'False'})
                         print(f"{at()}{color.reset}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} Password huntbot is wrong")
@@ -766,8 +776,20 @@ def CheckHuntBot(resp):
             msgs = msgs.json()
             for i in range(len(msgs)):
                 if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'I WILL BE BACK IN' in msgs[i]['content'] and not client.stopped:
+
+
                     solver.report(r['captchaId'], True)
                     print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [INFO] {color.reset} Password huntbot is right")
+                    huntbot_string = function.substring_after(huntbot_string, "I WILL BE BACK IN ")
+                    huntbot_string = function.substring_before(huntbot_string, "DONE")
+                    huntbot_string = function.substring_before(huntbot_string, ":blank:")
+                    hour_huntbot_string = function.substring_before(huntbot_string, "H")
+                    minute_huntbot_string = function.substring_before(function.substring_after(huntbot_string, "H"), "M")
+                    minute_huntbot_string = minute_huntbot_string.lstrip()
+                    wait_hour = int(hour_huntbot_string)
+                    wait_minute = int(minute_huntbot_string)
+                    client.wait_time_huntbot = wait_hour * 3600 + wait_minute * 60
+                    client.print(f"{at()}{color.okblue} [INFO] {color.reset} Next Huntbot: {wait_hour}H {wait_minute}M")
 
                 if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'WRONG PASSWORD' in msgs[i]['content'] and not client.stopped:
                     solver.report(r['captchaId'], False)
@@ -788,7 +810,16 @@ def CheckHuntBot(resp):
                         if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'I WILL BE BACK IN' in msgs[i]['content'] and not client.stopped:
                             solver.report(r['captchaId'], True)
                             print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [INFO] {color.reset} Password huntbot is right")
-
+                            huntbot_string = function.substring_after(huntbot_string, "I WILL BE BACK IN ")
+                            huntbot_string = function.substring_before(huntbot_string, "DONE")
+                            huntbot_string = function.substring_before(huntbot_string, ":blank:")
+                            hour_huntbot_string = function.substring_before(huntbot_string, "H")
+                            minute_huntbot_string = function.substring_before(function.substring_after(huntbot_string, "H"), "M")
+                            minute_huntbot_string = minute_huntbot_string.lstrip()
+                            wait_hour = int(hour_huntbot_string)
+                            wait_minute = int(minute_huntbot_string)
+                            client.wait_time_huntbot = wait_hour * 3600 + wait_minute * 60
+                            client.print(f"{at()}{color.okblue} [INFO] {color.reset} Next Huntbot: {wait_hour}H {wait_minute}M")
                         if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'WRONG PASSWORD' in msgs[i]['content'] and not client.stopped:
                             solver.report(r['captchaId'], True)
                             print(f"{at()}{color.okcyan} User: {client.username}{color.okgreen} [INFO] {color.reset} Password huntbot is Wrong")
