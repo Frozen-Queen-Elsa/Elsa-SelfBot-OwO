@@ -1,4 +1,4 @@
-from ToolPython.elsaowo import function
+from function import functions
 from information import information
 from time import sleep, strftime, localtime
 from color import color
@@ -6,7 +6,7 @@ import random
 from re import findall, sub
 
 client = information()
-
+function=functions()
 
 class runners:
     def __init__(self, bot):
