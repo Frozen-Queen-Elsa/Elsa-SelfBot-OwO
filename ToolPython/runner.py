@@ -78,16 +78,17 @@ class runners:
                 i += 1
         if not daily_string:
             sleep(5)
-            self.daily()
+            self.daily(username)
         else:
             if "Nu" in daily_string:
                 daily_string = findall('[0-9]+', daily_string)
                 wait_time_daily = str(int(daily_string[0]) * 3600 + int(daily_string[1]) * 60 + int(daily_string[2]))
                 print(f"{self.at()}{color.reset}{color.okcyan} User: {username}{color.okblue} [INFO] {color.reset} Next Daily: {wait_time_daily}s")
-            if "Your next daily" in daily_string:
+            elif "Your next daily" in daily_string:
                 print(f"{self.at()}{color.reset}{color.okcyan} User: {username}{color.okblue} [INFO] {color.reset} Claimed Daily")
                 wait_time_daily = 24 * 3600
-
+            else:
+                wait_time_daily = 1800
         return wait_time_daily
 
     def huntbot(self, username):

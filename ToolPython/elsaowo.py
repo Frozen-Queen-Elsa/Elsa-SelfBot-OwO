@@ -357,9 +357,9 @@ def CheckCaptcha(resp):
                 solver.report(answer['captchaId'], True)
                 return "solved"
             if mes['author']['id'] == client.OwOID and "Wrong verification code" in mes['content']:
-                print(f"{color.purple}Wrong Captcha{color.reset}")
+
                 webhook.webhookping(client.username, client.userid)
-                webhook.webhookPing(f"<@{client.webhook['pingid']}> [FAIL]I have solved the captcha fail in the 1st chance. Wait me at the 2nd chance. Sorry . User: {client.username} <@{client.userid}>")
+                webhook.webhookPing(f"<@{client.webhook['pingid']}> [FAIL]I have solved the captcha fail in the {time} chance. Wait me at the {time} chance. Sorry . User: {client.username} <@{client.userid}>")
                 solver.report(answer['captchaId'], False)  # Báo kết quả sai
 
                 if time == 1:
@@ -368,7 +368,8 @@ def CheckCaptcha(resp):
                     TextWrong = 'IS WRONG'
                     TextJoin = [answer1.upper(), TextWrong.lower()]
                     hint = ' '.join(TextJoin)
-                    SolveVIP(image_url, captcha_mes, hint, answer1, 0, time)
+                    print(f"{color.purple}Wrong Captcha 1st time{color.reset}")
+                    return SolveVIP(image_url, captcha_mes, hint, answer1, 0, time)
 
                 if time == 2:
                     time += 1
@@ -376,10 +377,13 @@ def CheckCaptcha(resp):
                     TextWrong = 'ARE WRONG'
                     TextJoin = [answer1.upper(), 'and', answer2.upper(), TextWrong.lower()]
                     hint = ' '.join(TextJoin)
-                    SolveVIP(image_url, captcha_mes, hint, answer1, answer2, time)
+                    print(f"{color.purple}Wrong Captcha 2nd time{color.reset}")
+                    return SolveVIP(image_url, captcha_mes, hint, answer1, answer2, time)
                 if time == 3:
+                    print(f"{color.purple}Wrong Captcha 3rd time{color.reset}")
                     return 'captcha'
             return 'captcha'
+        return 'captcha'
 
     def SolveLink():
         from selenium.webdriver.common.by import By
