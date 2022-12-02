@@ -392,6 +392,7 @@ def CheckCaptcha(resp):
         from selenium.webdriver.support.ui import WebDriverWait
         from selenium.webdriver.support import expected_conditions as EC
         import undetected_chromedriver as uc
+        import chromedriver_binary
         if client.twocaptcha['enable']:
             api = client.twocaptcha['api']
             # Check balance of 2Captcha
@@ -404,8 +405,7 @@ def CheckCaptcha(resp):
 
             # Setting Chrom extension
             chrome_options = uc.ChromeOptions()
-            chrome_options.add_extension('TwoCaptchaAutoSolve.crx')
-
+            chrome_options.add_extension('..\src\TwoCaptchaAutoSolve.crx')
             driver = uc.Chrome(options=chrome_options)
 
             # Setting key 2Captcha Solver
@@ -426,9 +426,7 @@ def CheckCaptcha(resp):
             js = 'function login(token) {setInterval(() => {document.body.appendChild(document.createElement `iframe`).contentWindow.localStorage.token = `"${token}"`}, 50);setTimeout(() => {location.reload();}, 500);}'
             WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, '#app > div.v-dialog__content.v-dialog__content--active > div > div > div.v-card__actions.actions > button')))
             driver.find_element(By.CSS_SELECTOR, value='#app > div.v-dialog__content.v-dialog__content--active > div > div > div.v-card__actions.actions > button').click()
-
             driver.execute_script(js + f'login("{token}")')
-
             WebDriverWait(driver, 10).until(EC.presence_of_element_located((By.CSS_SELECTOR, 'button[class="button-f2h6uQ lookFilled-yCfaCM colorBrand-I6CyqQ sizeMedium-2bFIHr grow-2sR_-F"]')))
             driver.find_element(By.CSS_SELECTOR, value='button[class="button-f2h6uQ lookFilled-yCfaCM colorBrand-I6CyqQ sizeMedium-2bFIHr grow-2sR_-F"]').click()
 
@@ -746,46 +744,6 @@ def CheckHuntBot(resp):
                 solver.report(r['captchaId'], False)
                 print(f'Time: {count}. The result {r["code"]} contants number.Try again')
 
-    def SolvePasswordFree(image_url):
-        if not client.twocaptcha['enable'] and client.solve['enable']:
-            user = bot.gateway.session.user
-            from api import CAPI
-            api = CAPI(client.userid, client.solve['server'])
-            encoded_string = b64encode(get(image_url).content).decode('utf-8')
-            r = api.solve(Json={'data': encoded_string, 'len': 5})
-            if r:
-                ui.slowPrinting(f"{color.okcyan}[INFO] {color.reset}Solved Password huntbot [Code: {r['code']}]")
-                bot.typingAction(str(client.channel))
-                sleep(3)
-                bot.sendMessage(str(client.channel), f"owo hb 28000 {r['code']}")
-                print(f"{at()}{color.reset}{color.okcyan} User: {client.username}{color.okgreen} [SENT] {color.reset} owo hb 28000 {r['code']}")
-                msgs = bot.getMessages(str(client.channel), num=10)
-                msgs = msgs.json()
-                for i in range(len(msgs)):
-                    if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'I WILL BE BACK IN' in msgs[i]['content'] and not client.stopped:
-                        api.report(Json={'captchaId': r['captchaId'], 'correct': 'True'})
-                        print(f"{at()}{color.reset}{color.okcyan} User: {client.username}{color.okgreen} [INFO] {color.reset} Password huntbot is right")
-                        huntbot_string = msgs[i]['content']
-                        huntbot_string = function.substring_after(huntbot_string, "I WILL BE BACK IN ")
-                        huntbot_string = function.substring_before(huntbot_string, "DONE")
-                        huntbot_string = function.substring_before(huntbot_string, ":blank:")
-                        if "H" in huntbot_string:
-                            hour_huntbot_string = function.substring_before(huntbot_string, "H")
-                            wait_hour = int(hour_huntbot_string)
-                            minute_huntbot_string = function.substring_before(function.substring_after(huntbot_string, "H"), "M")
-                        else:
-                            wait_hour = 0
-                            minute_huntbot_string = function.substring_before(huntbot_string, "M")
-                        minute_huntbot_string = minute_huntbot_string.lstrip()
-                        wait_hour = int(hour_huntbot_string)
-                        wait_minute = int(minute_huntbot_string)
-                        client.wait_time_huntbot = wait_hour * 3600 + wait_minute * 60
-                        client.print(f"{at()}{color.reset}{color.okblue} [INFO] {color.reset} Next Huntbot: {wait_hour}H {wait_minute}M")
-                    if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'WRONG PASSWORD' in msgs[i]['content'] and not client.stopped:
-                        api.report(Json={'captchaId': r['captchaId'], 'correct': 'False'})
-                        print(f"{at()}{color.reset}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} Password huntbot is wrong")
-                    if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'have enough' in msgs[i]['content'] and not client.stopped:
-                        print(f"{at()}{color.reset}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} You dont have enough Cowocy")
 
     def SolvePasswordVip(image_url):
         if client.twocaptcha['enable']:
@@ -798,7 +756,7 @@ def CheckHuntBot(resp):
                 webhook.webhookPing(f"<@{client.webhook['pingid']}> [FAIL]Out of money . User: {client.username} <@{client.userid}>")
                 webhook.webhookPing(f"=========================================================================================")
                 print(f"{at()}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} You dont have enough Money in 2Captcha Balance")
-                return SolvePasswordFree(image_url)
+
 
             # Solve by 2Captcha
             r = getPassword(encoded_string, countlen, 0)
@@ -835,7 +793,7 @@ def CheckHuntBot(resp):
                     wait_minute = int(minute_huntbot_string)
                     client.wait_time_huntbot = wait_hour * 3600 + wait_minute * 60
                     client.print(f"{at()}{color.reset}{color.okblue} [INFO] {color.reset} Next Huntbot: {wait_hour}H {wait_minute}M")
-
+                    return 'right'
                 if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'WRONG PASSWORD' in msgs[i]['content'] and not client.stopped:
                     solver.report(r['captchaId'], False)
                     print(f"{at()}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} Password huntbot is wrong.Try again")
@@ -871,27 +829,28 @@ def CheckHuntBot(resp):
                             wait_minute = int(minute_huntbot_string)
                             client.wait_time_huntbot = wait_hour * 3600 + wait_minute * 60
                             client.print(f"{at()}{color.reset}{color.okblue} [INFO] {color.reset} Next Huntbot: {wait_hour}H {wait_minute}M")
+                            return 'right'
                         if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'WRONG PASSWORD' in msgs[i]['content'] and not client.stopped:
                             solver.report(r['captchaId'], True)
                             print(f"{at()}{color.reset}{color.okcyan} User: {client.username}{color.okgreen} [INFO] {color.reset} Password huntbot is Wrong")
-
+                            return 'wrong'
                         if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'have enough' in msgs[i]['content'] and not client.stopped:
                             print(f"{at()}{color.reset}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} You dont have enough Cowocy")
-
+                            client.wait_time_huntbot=7200
+                            return 'money'
                 if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'have enough' in msgs[i]['content'] and not client.stopped:
-                    print(f"{at()}{color.reset}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} You dont have enough 30k Cowocy")
+                    print(f"{at()}{color.reset}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} You dont have enough 28k Cowocy")
+                    client.wait_time_huntbot = 7200
+                    return 'money'
 
     if resp.event.message:
         m = resp.parsed.auto()
-        if m['channel_id'] == client.channel and client.username in m['content'] and "here is your password" in m['content'].lower() and m['attachments'] and not client.stopped:
+        if client.twocaptcha['enable'] and m['channel_id'] == client.channel and client.username in m['content'] and "here is your password" in m['content'].lower() and m['attachments'] and not client.stopped:
             print(f'{at()}{color.warning} !! [HUNT BOT] !! {color.reset} Hunt Bot Password REQUİRED')
             print(f"{at()}{color.okblue} [INFO] {color.reset} Waiting solving Password")
             sleep(3)
-            if client.twocaptcha['enable']:
-                return SolvePasswordVip(m['attachments'][0]['url'])
-            else:
-                if client.solve['enable']:
-                    return SolvePasswordFree(m['attachments'][0]['url'])
+            return SolvePasswordVip(m['attachments'][0]['url'])
+
 
 
 # Gems
@@ -1112,7 +1071,7 @@ def ElsaLoopie():
 
             # Hunt_bot Mode
 
-            if time() - hunt_bot > int(client.wait_time_huntbot) and not client.stopped and client.huntbot['enable']:
+            if time() - hunt_bot > int(client.wait_time_huntbot) and not client.stopped and client.huntbot['enable'] and client.twocaptcha['enable']:
                 client.wait_time_huntbot = runner.huntbot(client.username)
                 hunt_bot = time()
 
