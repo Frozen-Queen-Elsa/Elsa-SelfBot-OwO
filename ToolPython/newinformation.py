@@ -460,7 +460,7 @@ def solve(data, all):
 
 def twocaptcha(data, all):
     print("")
-    data['twocaptcha']['enable'] = input(f"{color.okcyan}Do you have API Two Captcha, Enter API Two Captcha If You have : {color.yellow}")
+    data['twocaptcha']['enable'] = input(f"{color.okcyan}Do you have API Two Captcha, Enter API Two Captcha If You have [YES/NO]: {color.yellow}")
     if data['twocaptcha']['enable'].lower() =='yes':
         data['twocaptcha']['api'] = input(f"{color.okcyan}Input your two captcha API{color.reset}")
         data['twocaptcha']['enable'] = True
@@ -479,7 +479,7 @@ def twocaptcha(data, all):
 
 def huntbot(data, all):
     print("")
-    data['huntbot']['enable'] = input(f"{color.okcyan}Toggle Automatically Send Huntbot/Autohunt (YES/NO): {color.yellow}")
+    data['huntbot']['enable'] = input(f"{color.okcyan}Toggle Automatically Send Huntbot/Autohunt.Only available if you have TwoCaptcha API (YES/NO): {color.yellow}")
     if data['huntbot']['enable'].lower() == "yes":
         data['huntbot']['sacrifice']['enable'] = input(f"{color.okcyan}Toggle Automatically Sacrifice Huntbot/Autohunt (YES/NO): {color.yellow}")
         if data['huntbot']['sacrifice']['enable'].lower() == 'yes':

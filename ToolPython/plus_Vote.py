@@ -8,7 +8,7 @@ try:
     from selenium.webdriver.support import expected_conditions as EC
     from information import information
     import undetected_chromedriver as uc
-
+    import chromedriver_binary
 
 except Exception as e:
     from setup import install
@@ -19,7 +19,7 @@ except Exception as e:
     from selenium.webdriver.support import expected_conditions as EC
     from information import information
     import undetected_chromedriver as uc
-
+    import chromedriver_binary
 
 client = information()
 driver = uc.Chrome()
