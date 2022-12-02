@@ -28,21 +28,13 @@ This is the ELSA SELF-BOT for OwO Bot on Discord.
 
 ### Method 1: File .bat
 
-**Step 1: Install Selenium and Chrome Driver**
-
-* Open chrome and go to [chrome://version/](chrome://version), check the version of Chrome you are using
-
-* Go to [https://chromedriver.chromium.org/downloads](https://chromedriver.chromium.org/downloads) and download the current release Chrome Driver for your Chrome version
-
-* Copy the file you download and paste it into the folder of the project
-
-**Step 2: Install Python**
+**Step 1: Install Python**
 
 * Go to [Python website](https://www.python.org/downloads/) and download the latest version
 
 * Install Python. *When you set up python, remember to check **Add to the PATH**, don't click next next without read*
 
-**Step 3: Run file**
+**Step 2: Run file**
 
 * Run these files step by step 
 
@@ -58,25 +50,17 @@ This is the ELSA SELF-BOT for OwO Bot on Discord.
 ==========================================================================
 ### Method 2: File .py
 
-**Step 1: Install Selenium and Chrome Driver**
-
-* Open chrome and go to [chrome://version/](chrome://version), check the version of Chrome you are using
-
-* Go to [https://chromedriver.chromium.org/downloads](https://chromedriver.chromium.org/downloads) and download the current release Chrome Driver for your Chrome version
-
-* Copy the file you download and paste it into the folder of the project
-
-**Step 2: Install Python**
+**Step 1: Install Python**
 
 * Go to [Python website](https://www.python.org/downloads/) and download the latest version
 
 * Install Python. *When you set up python, remember to check **Add to the PATH**, don't click next next without read*
 
-**Step 3: Setup Library for Bot**
+**Step 2: Setup Library for Bot**
 
 * In folder named "ToolPython" then open a file name **setup.bat** or **setup.py** and wait for it to install the necessary libraries
 
-**Step 4: Setting Configuration for Bot**
+**Step 3: Setting Configuration for Bot**
 
 * In folder named "ToolPython" than open a file name **setting.bat** or **newinformation.py** and input your token, channel id, and the other settings.
 
@@ -84,7 +68,7 @@ This is the ELSA SELF-BOT for OwO Bot on Discord.
 
 * If you don't know how to get a User Token: Watch this video: [https://www.youtube.com/watch?v=YEgFvgg7ZPI](https://www.youtube.com/watch?v=YEgFvgg7ZPI)
 
-**Step 5: Run the Self-Bot**
+**Step 4: Run the Self-Bot**
 
 * In folder named "ToolPython" than open a file name **run.bat** or **elsaowo.py** to run the bot and that's all
 
