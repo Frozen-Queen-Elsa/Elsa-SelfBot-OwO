@@ -18,8 +18,8 @@ class casinos:
     def CoinFlip(self, currentbet):
         self.bot.typingAction(str(client.casino['channelcasinoid']))
         sleep(0.6)
-        self.bot.sendMessage(str(client.casino['channelcasinoid']), "owo cf {}  ".format(currentbet))
-        print(f"{self.at()}{color.reset}{color.okcyan} User: {client.username} {color.warning}[SENT]  owo cf {currentbet}  ")
+        self.bot.sendMessage(str(client.casino['channelcasinoid']), f"owo cf {currentbet}  ".format(currentbet))
+        print(f"{self.at()}{color.reset}{color.okcyan} User: {client.username} {color.warning}[SENT]  owo cf {currentbet}  {color.reset}")
         sleep(2)
         sleep(random.randint(1, 4))
 
@@ -27,7 +27,7 @@ class casinos:
     def Slot(self, currentbet):
         self.bot.typingAction(str(client.casino['channelcasinoid']))
         sleep(0.6)
-        self.bot.sendMessage(str(client.casino['channelcasinoid']), "owo s {}  ".format(currentbet))
-        print(f"{self.at()}{color.reset}{color.okcyan} User: {client.username} {color.warning}[SENT]  owo s {currentbet}  ")
+        self.bot.sendMessage(str(client.casino['channelcasinoid']), f"owo s {currentbet}  ".format(currentbet))
+        print(f"{self.at()}{color.reset}{color.okcyan} User: {client.username} {color.warning}[SENT]  owo s {currentbet}  {color.reset}")
         sleep(3)
         sleep(random.randint(1, 4))
