@@ -200,6 +200,11 @@ def on_ready(resp):
         print(f"{color.purple}Sound: {client.sound}{color.reset}")
         print(f"{color.purple}----------------------------------{color.reset}")
         print('═' * 25)
+        if client.casino['enable']:
+            if client.casino['cf']['enable']:
+                client.currentcfbet=client.casino['cf']['bet']
+            if client.casino['os']['enable']:
+                client.currentosbet=client.casino['os']['bet']
         if not client.start:
             loopie()
 
@@ -990,9 +995,9 @@ def CheckSlot(resp):
                                 if client.currentosbet >= 150000:
                                     client.currentosbet = 150000
                             if '**`___SLOTS___  `**\n<:eggplant:417475705719226369> <:eggplant:417475705719226369> <:eggplant:417475705719226369>' in m['content']:
-                                print("{}[INFO OS DRAW] {} OS Draw: {} Cowoncy/ {}Total Won: {} Cowoncy/ {}Total Lose: {} Cowoncy/ {}Last Benefit: {} Cowoncy. {}  ".format(color.yellow, client.username, client.currentosbet, color.okcyan, client.totalwon, color.pink, client.totallost, color.purple, client.totalwon - client.totallost, color.reset))
+                                print("{}[INFO OS DRAW] {} OS Draw: {} Cowoncy/ {}Total Won: {} Cowoncy/ {}Total Lose: {} Cowoncy/ {}Last Benefit: {} Cowoncy.{}".format(color.yellow, client.username, client.currentosbet, color.okcyan, client.totalwon, color.pink, client.totallost, color.purple, client.totalwon - client.totallost, color.reset))
                             if '**`___SLOTS___  `**\n<:cherry:417475705178161162> <:cherry:417475705178161162> <:cherry:417475705178161162>' in m['content']:
-                                print("{}[INFO OS WIN X3] {} OS Won X3: {} Cowoncy/ {}Total Won: {} Cowoncy/ {}Total Lose: {} Cowoncy/ {}Last Benefit: {} Cowoncy. {} ".format(color.okgreen, client.username, client.currentosbet, color.okcyan, client.totalwon + client.currentosbet * 3, color.pink, client.totallost, color.purple, client.totalwon + client.currentosbet * 3 - client.totallost, color.reset))
+                                print("{}[INFO OS WIN X3] {} OS Won X3: {} Cowoncy/ {}Total Won: {} Cowoncy/ {}Total Lose: {} Cowoncy/ {}Last Benefit: {} Cowoncy.{}".format(color.okgreen, client.username, client.currentosbet, color.okcyan, client.totalwon + client.currentosbet * 3, color.pink, client.totallost, color.purple, client.totalwon + client.currentosbet * 3 - client.totallost, color.reset))
                                 client.countmaxlost = 0
                                 client.totalwon = client.currentosbet * 3 + client.totalwon
                                 if client.currentosbet >= 30000:
@@ -1001,7 +1006,7 @@ def CheckSlot(resp):
                                 client.currentosbet = client.casino['os']['bet']
                                 sleep(1)
                             if '**`___SLOTS___  `**\n<:cowoncy:417475705912426496> <:cowoncy:417475705912426496> <:cowoncy:417475705912426496>' in m['content']:
-                                print("{}[INFO WIN X4] {} OS Won X4: {} Cowoncy/ {}Total Won: {} Cowoncy/ {}Total Lose: {} Cowoncy/ {}Last Benefit: {} Cowoncy. {} ".format(color.okgreen, client.username, client.currentosbet, color.okcyan, client.totalwon + client.currentosbet * 4, color.pink, client.totallost, color.purple, client.totalwon + client.currentosbet * 4 - client.totallost, color.reset))
+                                print("{}[INFO WIN X4] {} OS Won X4: {} Cowoncy/ {}Total Won: {} Cowoncy/ {}Total Lose: {} Cowoncy/ {}Last Benefit: {} Cowoncy.{}".format(color.okgreen, client.username, client.currentosbet, color.okcyan, client.totalwon + client.currentosbet * 4, color.pink, client.totallost, color.purple, client.totalwon + client.currentosbet * 4 - client.totallost, color.reset))
                                 client.countmaxlost = 0
                                 client.totalwon = client.currentosbet * 4 + client.totalwon
                                 if client.currentosbet >= 20000:
@@ -1033,15 +1038,15 @@ def CheckSlot(resp):
 def CheckBalance(resp):
     if client.casino['enable'] and not client.stopped:
         if client.casino['cf']['enable'] or client.casino['os']['enable']:
-            if resp.event.message_updated:
+            if resp.event.message:
                 m = resp.parsed.auto()
-
-                if m['author']['id'] == client.OwOID and client.username in m['content'] and 'you currently have' in m['content']:
-                    client.cash = findall('[0-9]+', m['content'])
-                    print("{}You currently have: {} Cowoncy! {}".format(color.warning, ','.join(client.cash[1::]), color.reset))
-                if client.username in m['content'] and 'You don\'t have enough cowoncy!' in m['content']:
-                    print(f"{color.fail} [ERROR] Not Enough Cowoncy To Continue! {color.reset}")
-                    client.checknocash = True
+                if 'you currently have' in m['content']:
+                    if m['author']['id'] == client.OwOID and client.username in m['content'] :
+                        client.cash = findall('[0-9]+', m['content'])
+                        print(f"{color.warning}You currently have: {','.join(client.cash[1::])} Cowoncy! {color.reset}")
+                    if client.username in m['content'] and 'You don\'t have enough cowoncy!' in m['content']:
+                        print(f"{color.fail} [ERROR] Not Enough Cowoncy To Continue! {color.reset}")
+                        client.checknocash = True
 
 
 def ElsaLoopie():
