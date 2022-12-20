@@ -16,11 +16,13 @@ class spam:
     def exp(self,channel_spam,username):
 
         try:
-            response = get("https://quote-garden.herokuapp.com/api/v3/quotes/random")
+            response = get("https://zenquotes.io/api/random")
+
             if response.status_code == 200:
                 json_data = response.json()
-                data = json_data['data']
-                self.bot.sendMessage(str(channel_spam), data[0]['quoteText'])
+
+                data = json_data[0]
+                self.bot.sendMessage(str(channel_spam), data['q'])
                 print(f'{self.at()}{color.reset}{color.okcyan} User: {username}{color.okcyan} [SPAM] {color.reset}')
                 client.totaltext += 1
                 sleep(random.randint(1, 6))
