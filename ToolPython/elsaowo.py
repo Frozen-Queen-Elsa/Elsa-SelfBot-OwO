@@ -84,8 +84,28 @@ spam = spam(bot)
 
 
 # Current Time
-def at():
+def at() -> str:
     return f'\033[0;43m{strftime("%d %b %Y %H:%M:%S", localtime())}\033[0;21m'
+
+
+def getMessages(num: int = 1, channel: str = client.channel) -> object:
+    messageObject = None
+    retries = 0
+    while not messageObject:
+        if not retries > 10:
+            messageObject = bot.getMessages(channel, num=num)
+            messageObject = messageObject.json()
+            if not type(messageObject) is list:
+                messageObject = None
+            else:
+                break
+            retries += 1
+            continue
+        if type(messageObject) is list:
+            break
+        else:
+            retries = 0
+    return messageObject
 
 
 while True:
@@ -122,7 +142,7 @@ while True:
 
 
 @bot.gateway.command
-def on_ready(resp):
+def on_ready(resp: object) -> None:
     if resp.event.ready_supplemental:  # ready_supplemental is sent after ready
         for i in range(len(bot.gateway.session.DMIDs)):
             if client.OwOID in bot.gateway.session.DMs[bot.gateway.session.DMIDs[i]]['recipients']:
@@ -202,18 +222,20 @@ def on_ready(resp):
         print('═' * 25)
         if client.casino['enable']:
             if client.casino['cf']['enable']:
-                client.currentcfbet=client.casino['cf']['bet']
+                client.currentcfbet = client.casino['cf']['bet']
             if client.casino['os']['enable']:
-                client.currentosbet=client.casino['os']['bet']
+                client.currentosbet = client.casino['os']['bet']
         if not client.start:
             loopie()
 
 
 @bot.gateway.command
-def security(resp):
-    threadcaptchamusic = threading.Thread(name="captchamusic", target=music.captchamusic)
-    threadsolvedmusic = threading.Thread(name="solvedmusic", target=music.solvedmusic)
-    if CheckCaptcha(resp) == "solved":
+def security(resp: object) -> None:
+    result = None
+    if resp.event.message:
+        result = CheckCaptcha(resp)
+
+    if result and result == "solved":
         if client.casino['enable']:
             if client.casino['cf']['enable'] or client.casino['os']['enable']:
                 webhook.webhookPing(f"[SUCCESS] I have solved the captcha succesfully in Channel: <#{client.channel}> or <#{client.channelocf}> . User: {client.username} ")
@@ -227,16 +249,17 @@ def security(resp):
         # threadsolvedmusic.start()
         sleep(3)
         print(f'{color.okcyan}[INFO] {color.reset}Captcha Solved. Started To Run Again')
-        execl(executable, executable, *argv)
-    if CheckCaptcha(resp) == "captcha":
+        # execl(executable, executable, *argv)
+    elif result == "captcha":
         client.stopped = True
         webhook.webhookping(client.username, client.userid)
+        threadcaptchamusic = threading.Thread(name="captchamusic", target=music.captchamusic)
         threadcaptchamusic.start()
         bot.switchAccount(client.token[:-4] + 'FvBw')
 
 
-@bot.gateway.command
-def CheckCaptcha(resp):
+# @bot.gateway.command
+def CheckCaptcha(resp: object) -> str:
     def getAnswer(img, lenghth, code, code2, code3):
         count = 0
         TimeAnswer = time()
@@ -278,7 +301,7 @@ def CheckCaptcha(resp):
                     print(f"{color.okcyan}[INFO] {color.reset}Solved Captcha [Code: {r['code']}]")
                     bot.sendMessage(client.dmsid, r['code'])
                     sleep(10)
-                    mes = bot.getMessages(client.dmsid)
+                    mes = getMessages(channel=client.dmsid)
                     try:
                         captcha_mes = json.loads(mes.text[1:-1]) if type(mes.json()) is list else {'author': {'id': '0'}}
                     except Exception as e:
@@ -345,7 +368,7 @@ def CheckCaptcha(resp):
                     return "captcha"
 
             answer = SolveCaptcha(encoded_string, count_len, hint, answer1, answer2, time)
-            mes = bot.getMessages(client.dmsid)
+            mes = getMessages(channel=client.dmsid)
             try:
                 mes = json.loads(mes.text[1:-1]) if type(mes.json()) is list else {'author': {'id': '0'}}
             except Exception as e:
@@ -472,7 +495,7 @@ def CheckCaptcha(resp):
                     print(f'{at()}{color.reset}{color.fail} !!! [BANNED] !!! {color.reset} Your Account Have Been Banned From OwO Bot Please Open An Issue On The Support Discord server')
                     return "captcha"
                 if client.username in m['content'] and any(captcha in m['content'].lower() for captcha in ['(1/5)', '(2/5)', '(3/5)', '(4/5)', '(5/5)']):
-                    msgs = bot.getMessages(client.dmsid)
+                    msgs = getMessages(channel=client.dmsid)
                     msgs = msgs.json()
 
                     if client.username in m['content'] and msgs[0]['author']['id'] == client.OwOID and '⚠' in msgs[0]['content'] and msgs[0]['attachments']:
@@ -744,7 +767,6 @@ def CheckHuntBot(resp):
                 solver.report(r['captchaId'], False)
                 print(f'Time: {count}. The result {r["code"]} contants number.Try again')
 
-
     def SolvePasswordVip(image_url):
         if client.twocaptcha['enable']:
             encoded_string = b64encode(get(image_url).content).decode('utf-8')
@@ -756,7 +778,6 @@ def CheckHuntBot(resp):
                 webhook.webhookPing(f"<@{client.webhook['pingid']}> [FAIL]Out of money . User: {client.username} <@{client.userid}>")
                 webhook.webhookPing(f"=========================================================================================")
                 print(f"{at()}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} You dont have enough Money in 2Captcha Balance")
-
 
             # Solve by 2Captcha
             r = getPassword(encoded_string, countlen, 0)
@@ -836,7 +857,7 @@ def CheckHuntBot(resp):
                             return 'wrong'
                         if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'have enough' in msgs[i]['content'] and not client.stopped:
                             print(f"{at()}{color.reset}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} You dont have enough Cowocy")
-                            client.wait_time_huntbot=7200
+                            client.wait_time_huntbot = 7200
                             return 'money'
                 if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'have enough' in msgs[i]['content'] and not client.stopped:
                     print(f"{at()}{color.reset}{color.okcyan} User: {client.username}{color.warning} [WARNING] {color.reset} You dont have enough 28k Cowocy")
@@ -850,7 +871,6 @@ def CheckHuntBot(resp):
             print(f"{at()}{color.okblue} [INFO] {color.reset} Waiting solving Password")
             sleep(3)
             return SolvePasswordVip(m['attachments'][0]['url'])
-
 
 
 # Gems
@@ -1000,7 +1020,7 @@ def CheckBalance(resp):
             if resp.event.message:
                 m = resp.parsed.auto()
                 if 'you currently have' in m['content']:
-                    if m['author']['id'] == client.OwOID and client.username in m['content'] :
+                    if m['author']['id'] == client.OwOID and client.username in m['content']:
                         client.cash = findall('[0-9]+', m['content'])
                         print(f"{color.warning}You currently have: {','.join(client.cash[1::])} Cowoncy! {color.reset}")
                     if client.username in m['content'] and 'You don\'t have enough cowoncy!' in m['content']:
