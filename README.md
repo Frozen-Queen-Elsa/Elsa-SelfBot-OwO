@@ -26,7 +26,7 @@ This is the ELSA SELF-BOT for OwO Bot on Discord.
 
 ==========================================================================
 
-### Method 1: File .bat
+### Method 1: File .exe
 
 **Step 1: Install Python**
 
