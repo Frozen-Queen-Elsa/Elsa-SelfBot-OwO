@@ -36,16 +36,10 @@ This is the ELSA SELF-BOT for OwO Bot on Discord.
 
 **Step 2: Run file**
 
-* Run these files step by step 
+* In folder named "Elsa_Self_Bot_OwO" then run **Elsa_SelfBot_OwO.exe**
 
-- - **1_setup.bat**  
 
-- - **2_setting.bat** 
-
-- - **3_Elsa_SelfBot_OwO.bat**
-
-* Notes:
-- - There are some plus self-bots for you to discover
+* Notes: There are some plus self-bots for you to discover
 
 ==========================================================================
 ### Method 2: File .py
@@ -58,11 +52,11 @@ This is the ELSA SELF-BOT for OwO Bot on Discord.
 
 **Step 2: Setup Library for Bot**
 
-* In folder named "ToolPython" then open a file name **setup.bat** or **setup.py** and wait for it to install the necessary libraries
+* In folder named "Elsa_Self_Bot_OwO" then open a file name **1_setup.bat** or **setup.py** and wait for it to install the necessary libraries
 
 **Step 3: Setting Configuration for Bot**
 
-* In folder named "ToolPython" than open a file name **setting.bat** or **newinformation.py** and input your token, channel id, and the other settings.
+* In folder named "Elsa_Self_Bot_OwO" than open a file name **2_setting.bat** or **newinformation.py** and input your token, channel id, and the other settings.
 
 * If you don't know how to get Chanel Id: Watch this tutorial: [https://turbofuture.com/internet/Discord-Channel-ID](https://turbofuture.com/internet/Discord-Channel-ID)
 
@@ -70,7 +64,7 @@ This is the ELSA SELF-BOT for OwO Bot on Discord.
 
 **Step 4: Run the Self-Bot**
 
-* In folder named "ToolPython" than open a file name **run.bat** or **elsaowo.py** to run the bot and that's all
+* In folder named "Elsa_Self_Bot_OwO" than open a file name **3_Elsa_SelfBot_OwO.bat** or **elsaowo.py** to run the bot and that's all
 
 ==========================================================================
 
