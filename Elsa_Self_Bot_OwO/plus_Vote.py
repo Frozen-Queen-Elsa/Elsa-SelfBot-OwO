@@ -1,22 +1,22 @@
 from time import sleep
-
+from information import information
 try:
     from selenium import webdriver
     from selenium.webdriver.common.by import By
     from selenium.webdriver.support.ui import WebDriverWait
     from selenium.webdriver.support import expected_conditions as EC
-    from ..files.information import information
+
     import undetected_chromedriver as uc
     import chromedriver_binary
 
 except Exception as e:
-    from ..setup import install
+    from setup import install
     install()
     from selenium import webdriver
     from selenium.webdriver.common.by import By
     from selenium.webdriver.support.ui import WebDriverWait
     from selenium.webdriver.support import expected_conditions as EC
-    from ..files.information import information
+
     import undetected_chromedriver as uc
     import chromedriver_binary
 

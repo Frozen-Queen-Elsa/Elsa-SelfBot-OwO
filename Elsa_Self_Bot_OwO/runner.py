@@ -3,7 +3,7 @@ from information import information
 from time import sleep, strftime, localtime
 from color import color
 import random
-from re import findall, sub
+from re import findall
 
 client = information()
 function=functions()

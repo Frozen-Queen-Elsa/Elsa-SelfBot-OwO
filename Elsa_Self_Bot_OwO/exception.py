@@ -1,6 +1,6 @@
 import sys
 from menu import UI
-from color import color
+from .color import color
 
 ui = UI()
 

@@ -1,4 +1,4 @@
-Version = ("ELSA", 1, 6, 0)
+Version = ("ELSA", 1, 6, 1)
 
 Author = "Frozen Queen Elsa"
 FileDescription = "This is the Elsa Selfbot for Owo bot on Discord"

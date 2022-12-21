@@ -1,9 +1,9 @@
-from files.menu import UI
+from Elsa_Self_Bot_OwO.menu import UI
 from json import load, dump
 from time import sleep
-from files.color import color
+from color import color
 import time
-from files.version import version
+from version import version
 
 ui = UI()
 elsa = '''\
@@ -42,7 +42,7 @@ elsa = '''\
 # [16] Change HuntBot Mode"
 
 def main():
-    with open("data/owosettings.json", "r") as f:
+    with open("data\owosettings.json", "r") as f:
         data = load(f)
     print(f'{color.okcyan}{elsa}{color.reset}')
     print(f"                   {color.purple}Version: {version} {color.reset}")
@@ -108,7 +108,7 @@ def main():
 def token(data, all):
     print("")
     data['token'] = input(f"{color.okcyan}Please Enter Your Account Token: {color.yellow}")
-    file = open("data/owosettings.json", "w")
+    file = open("data\owosettings.json", "w")
     dump(data, file, indent=4)
     file.close()
     print(f"{color.okgreen}[INFO] {color.okcyan}Successfully Saved!{color.reset}")
@@ -119,7 +119,7 @@ def token(data, all):
 def channel(data, all):
     print("")
     data['channel'] = input(f"{color.okcyan}Please Enter Your Channel ID: {color.yellow}")
-    file = open("data/owosettings.json", "w")
+    file = open("data\owosettings.json", "w")
     dump(data, file, indent=4)
     file.close()
     print(f"{color.okgreen}[INFO] {color.okcyan}Successfully Saved!{color.reset}")
@@ -146,7 +146,7 @@ def sleep(data, all):
         data['sleep']['enable'] = True
     else:
         data['sleep']['enable'] = False
-    file = open("data/owosettings.json", "w")
+    file = open("data\owosettings.json", "w")
     dump(data, file, indent=4)
     file.close()
     print(f"{color.okgreen}[INFO] {color.okcyan}Successfully Saved!{color.reset}")
@@ -171,7 +171,7 @@ def exp(data, all):
         data['exp']['enable'] = True
     else:
         data['exp']['enable'] = False
-    file = open("data/owosettings.json", "w")
+    file = open("data\owosettings.json", "w")
     dump(data, file, indent=4)
     file.close()
     print(f"{color.okgreen}[INFO] {color.okcyan}Successfully Saved!{color.reset}")
@@ -206,7 +206,7 @@ def runner(data, all):
         data['runner']['ring'] = True
     else:
         data['runner']['ring'] = False
-    file = open("data/owosettings.json", "w")
+    file = open("data\owosettings.json", "w")
     dump(data, file, indent=4)
     file.close()
     print(f"{color.okgreen}[INFO] {color.okcyan}Successfully Saved!{color.reset}")
@@ -234,7 +234,7 @@ def praycurse(data, all):
     else:
         data['praycurse']['enable'] = False
 
-    file = open("data/owosettings.json", "w")
+    file = open("data\owosettings.json", "w")
     dump(data, file, indent=4)
     file.close()
     print(f"{color.okgreen}[INFO] {color.okcyan}Successfully Saved!{color.reset}")
@@ -252,7 +252,7 @@ def sell(data, all):
         data['sell']['enable'] = True
     else:
         data['sell']['enable'] = False
-    file = open("data/owosettings.json", "w")
+    file = open("data\owosettings.json", "w")
     dump(data, file, indent=4)
     file.close()
     print(f"{color.okgreen}[INFO] {color.okcyan}Successfully Saved!{color.reset}")
@@ -271,7 +271,7 @@ def prefix(data, all):
 
     else:
         data['prefix']['enable'] = False
-    file = open("data/owosettings.json", "w")
+    file = open("data\owosettings.json", "w")
     dump(data, file, indent=4)
     file.close()
     print(f"{color.okgreen}[INFO] {color.okcyan}Successfully Saved!{color.reset}")
@@ -328,7 +328,7 @@ def gem(data, all):
         data['gem']['enable'] = True
     else:
         data['gem']['enable'] = False
-    file = open("data/owosettings.json", "w")
+    file = open("data\owosettings.json", "w")
     dump(data, file, indent=4)
     file.close()
     print(f"{color.okgreen}[INFO] {color.okcyan}Successfully Saved!{color.reset}")
@@ -389,7 +389,7 @@ def casino(data, all):
         data['casino']['enable'] = True
     else:
         data['casino']['enable'] = False
-    file = open("data/owosettings.json", "w")
+    file = open("data\owosettings.json", "w")
     dump(data, file, indent=4)
     file.close()
     print(f"{color.okgreen}[INFO] {color.okcyan}Successfully Saved!{color.reset}")
@@ -407,7 +407,7 @@ def sound(data, all):
     else:
         print(f"{color.fail}WRONG INPUT")
         sound(data,all)
-    file = open("data/owosettings.json", "w")
+    file = open("data\owosettings.json", "w")
     dump(data, file, indent=4)
     file.close()
     print(f"{color.okgreen}[INFO] {color.okcyan}Successfully Saved!{color.reset}")
@@ -427,7 +427,7 @@ def webhook(data, all):
     else:
         print(f'{color.fail}WRONG INPUT')
         webhook(data,all)
-    file = open("data/owosettings.json", "w")
+    file = open("data\owosettings.json", "w")
     dump(data, file, indent=4)
     file.close()
     print(f"{color.okgreen}[INFO] {color.okcyan}Successfully Saved!{color.reset}")
@@ -450,7 +450,7 @@ def solve(data, all):
     else:
         data['solve']['enable'] = False
 
-    file = open("data/owosettings.json", "w")
+    file = open("data\owosettings.json", "w")
     dump(data, file, indent=4)
     file.close()
     print(f"{color.okgreen}[INFO] {color.okcyan}Successfully Saved!{color.reset}")
@@ -469,7 +469,7 @@ def twocaptcha(data, all):
     else:
         print(f"{color.fail}Wrong Input")
         twocaptcha(data,all)
-    file = open("data/owosettings.json", "w")
+    file = open("data\owosettings.json", "w")
     dump(data, file, indent=4)
     file.close()
     print(f"{color.okgreen}[INFO] {color.okcyan}Successfully Saved!{color.reset}")
@@ -492,7 +492,7 @@ def huntbot(data, all):
         data['huntbot']['enable'] = True
     else:
         data['huntbot']['enable'] = False
-    file = open("data/owosettings.json", "w")
+    file = open("data\owosettings.json", "w")
     dump(data, file, indent=4)
     file.close()
     print(f"{color.okgreen}[INFO] {color.okcyan}Successfully Saved!{color.reset}")

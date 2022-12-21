@@ -4,7 +4,6 @@ from color import color
 from menu import UI
 from time import sleep
 from re import findall
-from inputimeout import TimeoutOccurred, inputimeout
 import json
 
 ui = UI()
@@ -41,7 +40,7 @@ class information:
         self.checkusegem = 0
         self.skipcheckgem = 0
 
-        with open('../data/owosettings.json', "r") as file:
+        with open('data/owosettings.json', "r") as file:
             data = json.load(file)
             self.token = data['token']
             self.channel = data['channel']

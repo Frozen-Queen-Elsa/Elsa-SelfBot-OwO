@@ -2,12 +2,12 @@ from time import sleep
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from ..files.information import information
-from ..discum import discum
+from information import information
+
 try:
     from discord_webhook import DiscordWebhook
 except:
-    from ..setup import install
+    from setup import install
     install()
     from discord_webhook import DiscordWebhook
 

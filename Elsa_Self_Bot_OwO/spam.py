@@ -1,9 +1,9 @@
 from information import information
 from time import sleep, strftime, localtime
 from color import color
-from requests import get,post
+from requests import get
 import random
-from re import findall, sub
+
 client = information()
 
 class spam:

@@ -1,9 +1,8 @@
-from ..files.menu import UI
+from menu import UI
 from json import load, dump
-from time import sleep
-from ..files.color import color
+from color import color
 import time
-from ..files.version import version
+from version import version
 
 ui = UI()
 elsa = '''\
@@ -28,7 +27,7 @@ elsa = '''\
 
 
 def main():
-    with open("../data/statussetting.json", "r", encoding='utf-8') as f:
+    with open("data/statussetting.json", "r", encoding='utf-8') as f:
         data = load(f)
     print(f'{color.okcyan}{elsa}{color.reset}')
     print(f"                   {color.purple}Version: {version} {color.reset}")
@@ -82,7 +81,7 @@ def status(data, all):
     else:
         print(f'{color.fail}Wrong Input{color.reset}')
         status(data, all)
-    file = open("../data/statussetting.json", "w", encoding='utf-8')
+    file = open("data/statussetting.json", "w", encoding='utf-8')
     dump(data, file, indent=4,ensure_ascii=False)
     file.close()
     print(f"{color.okgreen}[INFO] {color.okcyan}Successfully Saved!{color.reset}")

@@ -2,8 +2,8 @@ from time import sleep, strftime, localtime
 from menu import UI
 from color import color
 from information import information
-from Elsa_Self_Bot_OwO import discum
-from Elsa_Self_Bot_OwO.discum.utils.button import Buttoner
+from discum import discum
+from discum.utils.button import Buttoner
 try:
     from inputimeout import inputimeout, TimeoutOccurred
 except Exception as e:

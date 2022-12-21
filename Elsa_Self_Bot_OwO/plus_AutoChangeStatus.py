@@ -1,15 +1,15 @@
 import json
 from os import system, name
 from time import sleep, strftime, localtime
-from ..files.color import color
-from ..files.menu import UI
-from ..files.information import information
-from .. import discum
+from color import color
+from menu import UI
+from information import information
+from discum import discum
 
 try:
     from inputimeout import inputimeout, TimeoutOccurred
 except Exception as e:
-    from ..setup import install
+    from setup import install
     install()
     from inputimeout import inputimeout, TimeoutOccurred
 
@@ -81,7 +81,7 @@ def on_ready(resp: object) -> None:
         ChangeStatus()
 
 def ChangeStatus():
-    with open('../data/statussetting.json', "r", encoding='utf-8') as file:
+    with open('data/statussetting.json', "r", encoding='utf-8') as file:
         data = json.load(file)
         status = data['status']
     count = 1

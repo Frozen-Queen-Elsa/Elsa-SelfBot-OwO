@@ -1,6 +1,7 @@
 import random
 from time import sleep, strftime, localtime
 
+
 from color import color
 from information import information
 

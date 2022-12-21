@@ -1,6 +1,6 @@
 from information import information
-from time import sleep, strftime, localtime
-from color import color
+
+
 from discord_webhook import DiscordWebhook
 
 client = information()
