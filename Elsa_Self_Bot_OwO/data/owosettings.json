@@ -78,5 +78,9 @@
       "enable": false,
       "type": "all"
     }
+  },
+  "restart": {
+    "enable": false,
+    "time": 1800
   }
 }

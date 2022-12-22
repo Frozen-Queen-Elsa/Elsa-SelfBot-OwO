@@ -40,6 +40,7 @@ elsa = '''\
 # [14] Change Solve Captcha Setting"
 # [15] Change TwoCaptcha Setting"
 # [16] Change HuntBot Mode"
+# [17] Change Restart Mode
 
 def main():
     with open("data\owosettings.json", "r") as f:
@@ -70,6 +71,7 @@ def main():
         webhook(data, True)
         solve(data, True)
         twocaptcha(data, True)
+        restart(data, True)
 
     elif choice == "2":
         token(data, False)
@@ -101,6 +103,8 @@ def main():
         twocaptcha(data, False)
     elif choice == "16":
         huntbot(data, False)
+    elif choice == "17":
+        restart(data, False)
     else:
         print(f"{color.fail}[INFO] {color.reset}Invalid Choice")
 
@@ -492,6 +496,26 @@ def huntbot(data, all):
         data['huntbot']['enable'] = True
     else:
         data['huntbot']['enable'] = False
+    file = open("data\owosettings.json", "w")
+    dump(data, file, indent=4)
+    file.close()
+    print(f"{color.okgreen}[INFO] {color.okcyan}Successfully Saved!{color.reset}")
+    if not all:
+        main()
+
+def restart(data, all):
+    print("")
+    data['restart']['enable'] = input(f"{color.okcyan}Toggle Auto Restart Bot Mode (YES/NO): {color.yellow}")
+    if data['restart']['enable'].lower() == 'yes':
+        data['restart']['time'] = input(f"{color.okcyan}Please enter the time the bot is active before restart: {color.yellow}")
+        if data['restart']['time'].isdigit():
+            data['restart']['time'] = int(data['sleep']['time'])
+        else:
+            print(f'{color.fail}Wrong input')
+            sleep(data, all)
+        data['restart']['enable'] = True
+    else:
+        data['restart']['enable'] = False
     file = open("data\owosettings.json", "w")
     dump(data, file, indent=4)
     file.close()

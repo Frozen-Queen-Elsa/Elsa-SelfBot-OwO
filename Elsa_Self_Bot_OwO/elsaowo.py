@@ -130,7 +130,8 @@ while True:
     else:
         print(f'{color.fail} !! [ERROR] !! {color.reset} Wrong input!')
         sleep(1)
-        execl(executable, executable, *argv)
+        #execl(executable, executable, *argv)
+        os.system('python "elsaowo.py"')
 
 
 @bot.gateway.command
@@ -242,6 +243,7 @@ def security(resp: object) -> None:
         sleep(3)
         print(f'{color.okcyan}[INFO] {color.reset}Captcha Solved. Started To Run Again')
         # execl(executable, executable, *argv)
+        os.system('python "elsaowo.py"')
     elif result == "captcha":
         client.stopped = True
         webhook.webhookping(client.username, client.userid)
@@ -360,11 +362,10 @@ def CheckCaptcha(resp: object) -> str:
                     return "captcha"
 
             answer = SolveCaptcha(encoded_string, count_len, hint, answer1, answer2, time)
-            mes = getMessages(channel=client.dmsid)
+            mes = bot.getMessages(client.dmsid)
             try:
                 mes = json.loads(mes.text[1:-1]) if type(mes.json()) is list else {'author': {'id': '0'}}
-            except Exception as e:
-
+            except:
                 print(f"{color.okcyan}[INFO] {color.reset}There's An Issue With Re Runner")
                 webhook.webhookPing(f"<@{client.webhook['pingid']}> There's An Issue With Re Runner . User: {client.username} <@{client.userid}>")
                 webhook.webhookPing(f"=========================================================================================")
@@ -567,8 +568,8 @@ def CheckPrefix(resp):
                             bot.sendMessage(str(m['channel_id']), "Restarting...")
                             print(f"{color.okcyan} [INFO] Restarting...  {color.reset}")
                             sleep(1)
-                            execl(executable, executable, *argv)
-
+                            #execl(executable, executable, *argv)
+                            os.system('python "elsaowo.py"')
                         if m['content'].startswith("f{prefix}exit"):
                             bot.sendMessage(str(m['channel_id']), "Exiting...")
                             print(f"{color.okcyan} [INFO] Exiting...  {color.reset}")
@@ -704,34 +705,34 @@ def CheckHunt(resp):
                             if client.listhidden[i].lower() in pethunt.lower():
                                 webhook.webhookPing(f"<@{client.webhook['pingid']}> [INFO] I have found Hidden Pet at  . User: {client.username} <@{client.userid}> ")
                                 webhook.webhookPing(f"https://discord.com/channels/{client.guild_id}/{m['channel_id']}/{m['id']}")
-                                print(f"You found Hidden Pet by hunting at channel {channelname} in server {client.guild_name} with message id is {m['id']}")
+                                print(f"{color.warning}You found Hidden Pet by hunting at channel {channelname} in server {client.guild_name} with message id is {m['id']}")
                                 break
                         for i in range(len(client.listfabled)):
                             if client.listfabled[i].lower() in pethunt.lower():
                                 webhook.webhookPing(f"<@{client.webhook['pingid']}> [INFO] I have found Fabled Pet at  . User: {client.username} <@{client.userid}> ")
                                 webhook.webhookPing(f"https://discord.com/channels/{client.guild_id}/{m['channel_id']}/{m['id']}")
-                                print(f"You found Fabled Pet by hunting at channel {channelname} in server {client.guild_name} with message id is {m['id']}")
+                                print(f"{color.warning}You found Fabled Pet by hunting at channel {channelname} in server {client.guild_name} with message id is {m['id']}")
                                 break
                         for i in range(len(client.listbotrank)):
                             if client.listbotrank[i].lower() in pethunt.lower():
                                 webhook.webhookPing(f"<@{client.webhook['pingid']}> [INFO] I have found Bot Rank Pet at  . User: {client.username} <@{client.userid}> ")
                                 webhook.webhookPing(f"https://discord.com/channels/{client.guild_id}/{m['channel_id']}/{m['id']}")
-                                print(f"You found Bot Rank Pet by hunting at channel {channelname} in server {client.guild_name} with message id is {m['id']}")
+                                print(f"{color.warning}You found Bot Rank Pet by hunting at channel {channelname} in server {client.guild_name} with message id is {m['id']}")
                                 break
                         if "cpatreon" in pethunt:
                             webhook.webhookPing(f"<@{client.webhook['pingid']}> [INFO] I have found CPatreon Pet at  . User: {client.username} <@{client.userid}> ")
                             webhook.webhookPing(f"https://discord.com/channels/{client.guild_id}/{m['channel_id']}/{m['id']}")
-                            print(f"You found CPatreon Pet by hunting at channel {channelname} in server {client.guild_name} with message id is {m['id']}")
+                            print(f"{color.warning}You found CPatreon Pet by hunting at channel {channelname} in server {client.guild_name} with message id is {m['id']}")
                         for i in range(len(client.listdistored)):
                             if client.listdistored[i].lower() in pethunt.lower():
                                 webhook.webhookPing(f"<@{client.webhook['pingid']}> [INFO] I have found Distorted Pet at  . User: {client.username} <@{client.userid}> ")
                                 webhook.webhookPing(f"https://discord.com/channels/{client.guild_id}/{m['channel_id']}/{m['id']}")
-                                print(f"You found Distorted Pet by hunting at channel {channelname} in server {client.guild_name} with message id is {m['id']}")
+                                print(f"{color.warning}You found Distorted Pet by hunting at channel {channelname} in server {client.guild_name} with message id is {m['id']}")
                                 break
                         if "special" in pethunt:
                             webhook.webhookPing(f"<@{client.webhook['pingid']}> [INFO] I have found Special Pet at  . User: {client.username} <@{client.userid}> ")
                             webhook.webhookPing(f"https://discord.com/channels/{client.guild_id}/{m['channel_id']}/{m['id']}")
-                            print(f"You found Special Pet by hunting at channel {channelname} in server {client.guild_name} with message id is {m['id']}")
+                            print(f"{color.warning}You found Special Pet by hunting at channel {channelname} in server {client.guild_name} with message id is {m['id']}")
 
 
 @bot.gateway.command
@@ -1032,7 +1033,7 @@ def ElsaLoopie():
     daily = 0
     hunt_bot = 0
     main = time()
-
+    restart=time()
     change = main
 
     while True:
@@ -1114,6 +1115,11 @@ def ElsaLoopie():
                     casino.Slot(client.currentosbet)
                 slot = time()
 
+            # Auto restart
+            if time() - restart > client.restart['time'] and not client.stopped and client.restart['enable']:
+               # execl(executable, executable, *argv)
+               os.system('python "elsaowo.py"')
+
             sleep(0.1)
 
 
@@ -1142,7 +1148,8 @@ def atexit():
     except TimeoutOccurred:
         choice = "3"
     if choice == "1":
-        execl(executable, executable, *argv)
+        #execl(executable, executable, *argv)
+        os.system('python "elsaowo.py"')
     elif choice == "2":
         print("Having Issue? Tell Us In Our Support Server")
         print(f"{color.purple} https://dsc.gg/serverafs {color.reset}")

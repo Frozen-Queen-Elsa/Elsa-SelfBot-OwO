@@ -70,6 +70,8 @@ class information:
             self.twocaptcha = data['twocaptcha']
             # Huntbot
             self.huntbot = data['huntbot']
+            # Auto Restart
+            self.restart= data['restart']
         self.tokenbackup = self.token
         self.channelspambackup = self.exp['channelspamid']
 
