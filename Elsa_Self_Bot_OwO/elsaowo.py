@@ -295,11 +295,10 @@ def CheckCaptcha(resp: object) -> str:
                     print(f"{color.okcyan}[INFO] {color.reset}Solved Captcha [Code: {r['code']}]")
                     bot.sendMessage(client.dmsid, r['code'])
                     sleep(10)
-                    mes = getMessages(channel=client.dmsid)
+                    mes = bot.getMessages(client.dmsid)
                     try:
-                        captcha_mes = json.loads(mes.text[1:-1]) if type(mes.json()) is list else {'author': {'id': '0'}}
-                    except Exception as e:
-
+                        mes = json.loads(mes.text[1:-1]) if type(mes.json()) is list else {'author': {'id': '0'}}
+                    except:
                         webhook.webhookping(client.username, client.userid)
                         threadcaptcha.start()
                         print(f"{color.okcyan}[INFO] {color.reset}There's An Issue With ReRunner")
