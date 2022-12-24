@@ -4,9 +4,11 @@ from time import sleep, strftime, localtime
 from color import color
 import random
 from re import findall
+from webhook import webhooks
 
 client = information()
 function=functions()
+
 
 class runners:
     def __init__(self, bot):
@@ -103,11 +105,13 @@ class runners:
         huntbot_string = ""
         length = len(msgs)
         i = 0
+
         while i < length:
             if msgs[i]['author']['id'] == client.OwOID and msgs[i]['content'] != "":
                 if "I WILL BE BACK IN" in msgs[i]['content'] or "I AM BACK WITH" in msgs[i]['content']:
                     huntbot_string = msgs[i]['content']
                     i = length
+
                 else:
                     i += 1
             else:
@@ -134,6 +138,7 @@ class runners:
             return wait_time_huntbot
         elif "I AM BACK WITH" in huntbot_string:
             print(f"{self.at()}{color.reset}{color.okblue} [INFO] {color.reset} Claimed Huntbot")
+
             if client.huntbot['sacrifice']['enable'] and client.stopped != True:
                 self.bot.typingAction(str(client.channel))
                 sleep(3)

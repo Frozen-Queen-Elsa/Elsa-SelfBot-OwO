@@ -1,4 +1,4 @@
-from Elsa_Self_Bot_OwO.menu import UI
+from menu import UI
 from json import load, dump
 from time import sleep
 from color import color
