@@ -165,9 +165,9 @@ def exp(data, all):
         data['exp']['channelspamid'] = input(f"{color.okcyan}Input channel id you want to spam exp(should be a private server): {color.yellow}")
         data['exp']['changechannel'] = input(f"{color.okcyan}Toggle Automatically change channel spam to get more exp (YES/NO): {color.yellow}")
         if data['exp']['changechannel'].lower() == 'yes':
-            data['exp']['channelchannel'] = True
+            data['exp']['changechannel'] = True
         elif data['exp']['changechannel'].lower() == 'no':
-            data['exp']['channelchannel'] = False
+            data['exp']['changechannel'] = False
         else:
             print(f'{color.warning}Invalid Input')
             exp(data, all)
