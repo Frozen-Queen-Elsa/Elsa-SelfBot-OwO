@@ -481,21 +481,21 @@ def CheckCaptcha(resp: object) -> str:
         m = resp.parsed.auto()
         if m['channel_id'] == client.channel or m['channel_id'] == client.casino['channelcasinoid'] or m['channel_id'] == client.dmsid and not client.stopped:
             if m['author']['id'] == client.OwOID or m['author']['username'] == 'OwO' or m['author']['discriminator'] == '8456':
-                if client.username in m['content'] and 'banned' in m['content'].lower():
+                if client.username in m['content'] and 'banned' in m['content'].lower() and not client.stopped:
                     client.stopped = True
                     print(f'{at()}{color.reset}{color.fail} !!! [BANNED] !!! {color.reset} Your Account Have Been Banned From OwO Bot Please Open An Issue On The Support Discord server')
                     return "captcha"
-                if client.username in m['content'] and any(captcha in m['content'].lower() for captcha in ['(1/5)', '(2/5)', '(3/5)', '(4/5)', '(5/5)']):
+                if client.username in m['content'] and any(captcha in m['content'].lower() for captcha in ['(1/5)', '(2/5)', '(3/5)', '(4/5)', '(5/5)']) and not client.stopped:
                     msgs = getMessages(channel=client.dmsid)
                     msgs = msgs.json()
-
+                    client.stopped = True
                     if client.username in m['content'] and msgs[0]['author']['id'] == client.OwOID and '⚠' in msgs[0]['content'] and msgs[0]['attachments']:
                         print(f'{at()}{color.reset}{color.warning} !! [CAPTCHA] !! {color.reset} ACTION REQUİRED')
                         if client.twocaptcha['enable']:
                             client.stopped = True
                             return SolveVIP(msgs[0]['attachments'][0]['url'], msgs[0]['content'], "", 0, 0, 1)
                         else:
-                            if client.solve['enable'] and not client.stopped:
+                            if client.solve['enable']:
                                 client.stopped = True
                                 return SolveFree(msgs[0]['attachments'][0]['url'], msgs[0]['content'])
                             else:
@@ -513,15 +513,14 @@ def CheckCaptcha(resp: object) -> str:
                     msgs = bot.getMessages(str(client.channel), num=10)
                     msgs = msgs.json()
                     for i in range(len(msgs)):
-                        if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'solving the captcha' in msgs[i]['content'].lower() and not client.stopped:
+                        if client.username in msgs[i]['content'] and msgs[i]['author']['id'] == client.OwOID and 'solving the captcha' in msgs[i]['content'].lower() :
                             print(f'{at()}{color.reset}{color.warning} !! [CAPTCHA] !! {color.reset} ACTION REQUİRED')
                             if client.twocaptcha['enable']:
 
                                 return SolveVIP(msgs[i]['attachments'][0]['url'], msgs[0]['content'], "", 0, 0, 1)
                             else:
-                                if client.solve['enable'] and not client.stopped:
+                                if client.solve['enable']:
                                     client.stopped = True
-
                                     return SolveFree(msgs[i]['attachments'][0]['url'], msgs[0]['content'])
                                 else:
                                     client.stopped = True
@@ -537,7 +536,7 @@ def CheckCaptcha(resp: object) -> str:
                         if client.twocaptcha['enable']:
                             return SolveVIP(m['attachments'][0]['url'], m['content'], "", 0, 0, 1)
                         else:
-                            if client.solve['enable'] and not client.stopped:
+                            if client.solve['enable'] :
                                 client.stopped = True
                                 return SolveFree(m['attachments'][0]['url'], m['content'])
                             else:
@@ -881,6 +880,7 @@ def CheckGem(resp):
                             client.checknogem = False
                         else:
                             client.checknogem = True
+
                         sleep(2)
 
 
