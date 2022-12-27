@@ -486,8 +486,12 @@ def CheckCaptcha(resp: object) -> str:
                     print(f'{at()}{color.reset}{color.fail} !!! [BANNED] !!! {color.reset} Your Account Have Been Banned From OwO Bot Please Open An Issue On The Support Discord server')
                     return "captcha"
                 if client.username in m['content'] and any(captcha in m['content'].lower() for captcha in ['(1/5)', '(2/5)', '(3/5)', '(4/5)', '(5/5)']) and not client.stopped:
-                    msgs = getMessages(channel=client.dmsid)
+                    msgs= bot.getMessages(client.dmsid)
                     msgs = msgs.json()
+                    if type(msgs) is dict:
+                        client.stopped = True
+                        ui.slowPrinting(f'{at()}{color.warning} !! [CAPTCHA] !! {color.reset} ACTION REQUİRED')
+                        return "captcha"
                     client.stopped = True
                     if client.username in m['content'] and msgs[0]['author']['id'] == client.OwOID and '⚠' in msgs[0]['content'] and msgs[0]['attachments']:
                         print(f'{at()}{color.reset}{color.warning} !! [CAPTCHA] !! {color.reset} ACTION REQUİRED')
