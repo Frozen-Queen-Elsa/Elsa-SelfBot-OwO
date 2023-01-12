@@ -20,7 +20,7 @@ import undetected_chromedriver as uc
 if client.twocaptcha['enable']:
     # Setting Chrom extension
     chrome_options = uc.ChromeOptions()
-    chrome_options.add_extension('..\src\TwoCaptchaAutoSolve.crx')
+    chrome_options.add_extension('src\TwoCaptchaAutoSolve.crx')
 
     driver = uc.Chrome(options=chrome_options)
 
