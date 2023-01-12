@@ -67,7 +67,7 @@ if client.twocaptcha['enable']:
         if client.webhook['enable'] :
             webhook = DiscordWebhook(url=client.webhook['link'], content=f"<@{client.webhookping}> Solve Captcha Link Successfully  . User: {client.username} <@{client.userid}>")
 
-        # os.system('python "mainvip.py"')
+        # os.system('python "elsaowo.py"')
         sleep(5)
         driver.quit()
 
